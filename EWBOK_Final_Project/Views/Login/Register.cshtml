@@ -1,0 +1,82 @@
+﻿@model EWBOK_Final_Project.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" height="300" width="1920" alt="fashion img">
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Tài khoản</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Home</a></li>
+                    <li class="active">Tài khoản</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- Cart view section -->
+<section id="aa-myaccount">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-myaccount-area">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="aa-myaccount-login">
+                                <h4>Đăng ký</h4>
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <form action="/Login/Register" method="post" class="aa-login-form">
+                                    @Html.LabelFor(x => x.Username)<span>*</span>
+                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.Username, new { placeholder = "Username" })
+                                    @*<input name="Username" type="text" placeholder="Username">*@
+
+                                    @Html.LabelFor(x => x.Password)<span>*</span>
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    @Html.PasswordFor(model => model.Password, new { placeholder = "Password" })
+                                    @*<input value="@Model.Password" name="Password" type="password" placeholder="Password">*@
+
+                                    @Html.LabelFor(x => x.ConfirmPassword)<span>*</span>
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { placeholder = "Xác nhận mật khẩu" })
+                                    @*<input value="@Model.ConfirmPassword" name="ConfirmPassword" type="password" placeholder="Confirm Password" />*@
+
+                                    @Html.LabelFor(x => x.Name)<span>*</span>
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.Name, new { placeholder = "Họ tên" })
+                                    @*<input value="@Model.Name" name="Name" type="text" placeholder="Name" />*@
+
+                                    @Html.LabelFor(x => x.Email)<span>*</span>
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.Email, new { placeholder = "Email" })
+                                    @*<input value="@Model.Email" name="Email" type="text" placeholder="Email" />*@
+
+                                    @Html.LabelFor(x => x.Phone)
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.Phone, new { placeholder = "Điện thoại" })
+                                    @*<input value="@Model.Phone" name="Phone" type="text" placeholder="Phone number" />*@
+
+                                    @Html.LabelFor(x => x.Address)
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.Address, new { placeholder = "Địa chỉ" })
+                                    @*<input value="@Model.Address" name="Address" type="text" placeholder="Address" />*@
+
+                                    <button type="submit" class="aa-browse-btn">Đăng ký</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Cart view section -->

@@ -1,0 +1,74 @@
+﻿@model List<Model.EF.Author>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section jsFooter{
+    <script src="~/Content/admin/js/controller/authorController.js"></script>
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-2 text-gray-800">
+        Author | <a class="link-property" href="/Admin/Author/Create"><i class="fa fa-plus-square text-secondary"></i></a>
+    </h1>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-light border-bottom-0">
+        <h6 class="m-0 font-weight-bold text-primary">Author Information</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Name</th>
+                        <th>Pen-Name</th>
+                        <th>Place of Birth</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Function</th>
+                        <th>Name</th>
+                        <th>Pen-Name</th>
+                        <th>Place of Birth</th>
+                        <th>Status</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a class="link-property" href="/Admin/Author/Edit/@item.ID"><i class="fa fa-edit" style="font-size:20px; "></i></a>
+                                <a class="link-property" href="/Admin/Author/Detail/@item.ID"><i class="fa fa-newspaper-o" style="font-size:20px;"></i></a>
+                                <a class="link-property" href="/Admin/Author/Delete/@item.ID"><i class="fa fa-close" style="font-size:20px"></i></a>
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.NickName</td>
+                            <td>@item.PlaceOfBirth</td>
+                            <td>
+                                <a href="#" class="btn-active" data-id="@item.ID">
+                                    @if (@item.Status == false)
+                                    {
+                                        <i class="fa fa-lock"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-check"></i>
+                                    }
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,49 @@
+﻿
+@using Model.EF;
+@using EWBOK_Final_Project.Common;
+@{
+    var listcate = (List<ProductCategory>)ViewBag.Category;
+}
+
+<div class="col-lg-3 col-md-3 col-sm-4 col-md-pull-9">
+    <aside class="aa-sidebar">
+        <!-- single sidebar -->
+        <div class="aa-sidebar-widget">
+            <h3>Thể loại</h3>
+            <ul class="aa-catg-nav">
+                @for (int i = 0; i < listcate.Count(); i++)
+                {
+                    <li>
+                        <a href="/ProductClient/ListAllProductPost/@listcate[i].ID?minprice=@Session[Constants.MINPRICE]&maxprice=@Session[Constants.MAXPRICE]&sort=@Session[Constants.SORT_ACTIVE]&statussort=@Session[Constants.SORTSTATUS_ACTIVE]">@listcate[i].Name</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <!-- single sidebar -->
+        <!-- single sidebar -->
+        <div class="aa-sidebar-widget">
+            <h3>Lọc theo giá</h3>
+            <!-- price range -->
+            <div class="aa-sidebar-price-range">
+                <form action="@Url.Action("ListAllProductPost","ProductClient")" method="get">
+                    <label>Min</label>
+                    <input type="number" class="form-control" name="minprice" placeholder="Min" value="@Session[Constants.MINPRICE]" />
+                    <label>Max</label>
+                    @if ((decimal)Session[Constants.MAXPRICE] != decimal.MaxValue)
+                    {
+                        <input type="number" class="form-control" name="maxprice" placeholder="Max" value="@Session[Constants.MAXPRICE]" />
+                    }
+                    else
+                    {
+                        <input type="number" class="form-control" name="maxprice" placeholder="Max" />
+                    }
+                    <br />
+                    <button class="aa-filter-btn" type="submit">Filter</button>
+                </form>
+            </div>
+        </div>
+            <!-- single sidebar -->
+            <!-- single sidebar -->
+            <!-- single sidebar -->
+    </aside>
+</div>

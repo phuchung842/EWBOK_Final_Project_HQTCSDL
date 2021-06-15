@@ -1,0 +1,118 @@
+﻿@model Model.sp_Models.ProductToCheckedModel
+@{
+    ViewBag.Title = "WithoutRegis";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@*@section jsFooter{
+        <script src="~/Content/admin/js/controller/rentController.js"></script>
+    }*@
+<form method="post" action="/Admin/Rent/WithoutRegis" name="frm-example" id="frm-example">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Rent </h1>
+    </div>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label>Name</label>
+            <div>
+                <input required class="form-control" name="Name" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>IDNumber</label>
+            <div>
+                <input required class="form-control" name="IDNumber" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <div>
+                <input class="form-control" name="Address" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Email</label>
+                <div>
+                    <input type="email" required class="form-control" name="Email" />
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>Phone</label>
+                <div>
+                    <input required class="form-control" name="Phone" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-light border-bottom-0">
+            <h6 class="m-0 font-weight-bold text-primary">Đơn</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>IsChecked</th>
+                            <th>Name</th>
+                            <th>Having Quantity</th>
+                            <th>Days Rent</th>
+                            <th>Choose Quantity</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>IsChecked</th>
+                            <th>Name</th>
+                            <th>Having Quantity</th>
+                            <th>Days Rent</th>
+                            <th>Choose Quantity</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @for (int i = 0; i < Model.ListProductToCheckedModel.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.CheckBoxFor(model => model.ListProductToCheckedModel[i].IsChecked)
+                                    <span class="checkmark"></span>
+                                    @Html.HiddenFor(model => model.ListProductToCheckedModel[i].ProductID)
+                                    @Html.HiddenFor(model => model.ListProductToCheckedModel[i].Quantity)
+                                    @Html.HiddenFor(model => model.ListProductToCheckedModel[i].Name)
+                                </td>
+                                <td><strong>@Model.ListProductToCheckedModel[i].Name</strong></td>
+                                <td>@Model.ListProductToCheckedModel[i].Quantity</td>
+                                <td>
+                                    @Html.EditorFor(model => model.ListProductToCheckedModel[i].DayRent, new { htmlAttributes = new { @Value = 1 } })
+                                    @Html.ValidationMessageFor(model => model.ListProductToCheckedModel[i].DayRent, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @{
+                                        var listdropdown = new List<int>();
+                                        for (int j = 1; j <= Model.ListProductToCheckedModel[i].Quantity; j++)
+                                        {
+                                            listdropdown.Add(j);
+                                        }
+                                    }
+                                    @Html.DropDownListFor(model => model.ListProductToCheckedModel[i].QuantityChoose, new SelectList(listdropdown, Model.ListProductToCheckedModel[i].QuantityChoose))
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <div class="form-group col-md-3">
+                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Accept" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

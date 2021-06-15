@@ -1,0 +1,319 @@
+﻿@model List<JoinOrder_User>
+@using EWBOK_Final_Project.Common;
+@using Model.EF;
+@using EWBOK_Final_Project.Areas.Admin.Model;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var userinfo = (User)Session[Constants.USER_INFO];
+
+    //Statistic
+    var TotalUser = (int)ViewBag.TotalUser;
+    var TotalView = (int)ViewBag.TotalView;
+    var TotalProductBellow50 = (int)ViewBag.TotalProductBellow50;
+    var TotalPurchased = (int)ViewBag.TotalPurchased;
+    //Statistic
+
+    //piechart
+    var CateName = (string)ViewBag.CateName;
+    var CateColor = (string)ViewBag.CateColor;
+    var CateIncome = (string)ViewBag.CateIncome;
+    //piechart
+
+    //linechart
+    var ViewCountM1 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM1).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM1 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM1).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM2 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM2).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM2 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM2).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM3 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM3).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM3 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM3).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM4 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM4).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM4 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM4).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM5 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM5).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM5 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM5).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM6 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM6).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM6 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM6).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM7 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM7).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM7 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM7).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM8 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM8).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM8 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM8).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM9 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM9).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM9 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM9).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM10 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM10).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM10 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM10).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM11 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM11).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM11 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM11).Sum(x => x.OrderDetail.Quantity);
+    var ViewCountM12 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM12).GroupBy(x => x.OrderDetail.ProductID).Count();
+    var PayCountM12 = ((List<JoinOrder_OrderDetail>)ViewBag.CountM12).Sum(x => x.OrderDetail.Quantity);
+    //linechart
+
+    //barchart
+    var IncomeM1 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM1).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM2 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM2).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM3 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM3).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM4 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM4).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM5 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM5).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM6 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM6).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM7 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM7).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM8 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM8).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM9 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM9).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM10 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM10).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM11 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM11).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    var IncomeM12 = ((List<JoinOrder_OrderDetail>)ViewBag.IncomeM12).Sum(x => x.OrderDetail.PromotionPrice.HasValue ? x.OrderDetail.PromotionPrice.Value : x.OrderDetail.Price.Value);
+    //barchart
+}
+@section jsChart{
+    <script>
+        new Chart(document.getElementById("barchart"), {
+            type: 'bar',
+            data: {
+                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                datasets: [{
+                    data: [@IncomeM1, @IncomeM2, @IncomeM3, @IncomeM4, @IncomeM5, @IncomeM6, @IncomeM7, @IncomeM8, @IncomeM9, @IncomeM10, @IncomeM11, @IncomeM12],
+                    label: 'Doanh thu hằng tháng',
+                    backgroundColor: "#4755AB",
+                    borderWidth: 1,
+                },]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("linechart"), {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                datasets: [{
+                    label: 'Lượt View',
+                    backgroundColor: '#000080',
+                    borderColor: '#000080',
+                    data: [@ViewCountM1, @ViewCountM2, @ViewCountM3, @ViewCountM4, @ViewCountM5, @ViewCountM6, @ViewCountM7, @ViewCountM8, @ViewCountM9, @ViewCountM10, @ViewCountM11, @ViewCountM12],
+                    fill: false,
+                }, {
+                    label: 'Số lượng mua',
+                    fill: false,
+                    backgroundColor: '#800080',
+                    borderColor: '#800080',
+                    data: [@PayCountM1, @PayCountM2, @PayCountM3, @PayCountM4, @PayCountM5, @PayCountM6, @PayCountM7, @PayCountM8, @PayCountM9, @PayCountM10, @PayCountM11, @PayCountM12],
+                }]
+            },
+            options: {
+                responsive: true,
+                // title: {
+                // 	display: true,
+                // 	text: 'Chart.js Line Chart'
+                // },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Tháng'
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Giá trị'
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("piechart").getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: [@Html.Raw(CateName)],
+                datasets: [{
+                    backgroundColor: [@Html.Raw(CateColor)],
+                    data: [@CateIncome]
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+            }
+        });
+    </script>
+}
+<div class="welcome-msg pt-3 pb-4">
+    <h1>Xin chào <span class="text-primary">@userinfo.Name</span>, Chúc một ngày tốt lành</h1>
+    <p>@userinfo.GroupID</p>
+</div>
+
+<!-- statistics data -->
+<div class="statistics">
+    <div class="row">
+        <div class="col-xl-6 pr-xl-2">
+            <div class="row">
+                <div class="col-sm-6 pr-sm-2 statistics-grid">
+                    <div class="card card_border border-primary-top p-4">
+                        <i class="lnr lnr-users"> </i>
+                        <h3 class="text-primary number">@TotalUser</h3>
+                        <p class="stat-text">Tổng Users</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 pl-sm-2 statistics-grid">
+                    <div class="card card_border border-primary-top p-4">
+                        <i class="lnr lnr-eye"> </i>
+                        <h3 class="text-secondary number">@TotalView</h3>
+                        <p class="stat-text">Tổng lượt xem</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 pl-xl-2">
+            <div class="row">
+                <div class="col-sm-6 pr-sm-2 statistics-grid">
+                    <div class="card card_border border-primary-top p-4">
+                        <i class="fa fa-warning"> </i>
+                        <h3 class="text-danger number">@TotalProductBellow50</h3>
+                        <p class="stat-text">Sản phẩm có số lượng dưới 50</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 pl-sm-2 statistics-grid">
+                    <div class="card card_border border-primary-top p-4">
+                        <i class="lnr lnr-cart"> </i>
+                        <h3 class="text-success number">@TotalPurchased</h3>
+                        <p class="stat-text">Đã bán</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //statistics data -->
+<!-- charts -->
+<div class="chart">
+    <div class="row">
+        <div class="col-lg-6 pr-lg-2 chart-grid">
+            <div class="card text-center card_border">
+                <div class="card-header chart-grid__header">
+                    Tỉ trọng của thể loại
+                </div>
+                <div class="card-body">
+                    <!-- bar chart -->
+                    <div id="container">
+                        <canvas id="piechart"></canvas>
+                    </div>
+                    <!-- //bar chart -->
+                </div>
+                <div class="card-footer text-muted chart-grid__footer">
+                    Biểu đồ tròn tỉ trọng giữa các thể loại
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 pl-lg-2 chart-grid">
+            <div class="card text-center card_border">
+                <div class="card-header chart-grid__header">
+                    Số lượt view và số lượt mua
+                </div>
+                <div class="card-body">
+                    <!-- line chart -->
+                    <div id="container">
+                        <canvas id="linechart"></canvas>
+                    </div>
+                    <!-- //line chart -->
+                </div>
+                <div class="card-footer text-muted chart-grid__footer">
+                    Biểu đồ tương quan giữa mua và xem
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 pl-lg-2 chart-grid">
+            <div class="card text-center card_border">
+                <div class="card-header chart-grid__header">
+                    Doanh thu hằng tháng của năm
+                </div>
+                <div class="card-body">
+                    <!-- line chart -->
+                    <div id="container">
+                        <canvas id="barchart"></canvas>
+                    </div>
+                    <!-- //line chart -->
+                </div>
+                <div class="card-footer text-muted chart-grid__footer">
+                    Biểu đồ doanh thu hằng tháng của năm
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //charts -->
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-light border-bottom-0">
+        <h6 class="m-0 font-weight-bold text-primary">Users Information</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>OrderID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Email</th>
+                        <th>Customer Email</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Function</th>
+                        <th>OrderID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Ship Email</th>
+                        <th>Customer Email</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a class="link-property" href="/Admin/Home/DetailOrder/@item.Order.ID"><i class="fa fa-id-card" style="font-size:20px;"></i></a>
+                            </td>
+                            <td>@item.Order.ID</td>
+                            <td>@item.User.UserName</td>
+                            <td>@item.Order.CreateDate</td>
+                            <td>@item.Order.ShipEmail</td>
+                            <td>@item.User.Email</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

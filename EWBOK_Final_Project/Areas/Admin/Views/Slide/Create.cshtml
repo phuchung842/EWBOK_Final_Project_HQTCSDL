@@ -1,0 +1,62 @@
+﻿@model Model.EF.Slide
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Slide", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Create Slide | <a class="link-property" href="/Admin/Slide/Index"><i class="fa fa-list text-secondary"></i></a></h1>
+    </div>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                <div>
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Decription, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.ValidationMessageFor(model => model.Decription, "", new { @class = "text-danger" })
+                <div>
+                    @Html.TextBoxFor(model => model.Decription, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+                <div>
+                    @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Link, htmlAttributes: new { @class = "control-label col-md-3" })
+                @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+                <div>
+                    @Html.TextBoxFor(model => model.Link, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div>
+                @Html.TextBox("postedFile", "", new { type = "file" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" value="Create" class="btn btn-primary btn-user btn-block" />
+            </div>
+        </div>
+    </div>
+}
+

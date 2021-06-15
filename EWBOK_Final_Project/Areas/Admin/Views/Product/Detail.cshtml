@@ -1,0 +1,197 @@
+﻿@model Model.EF.Product
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var listPub = (List<Model.EF.Publisher>)ViewBag.ListPublisher;
+    var listAut = (List<Model.EF.Author>)ViewBag.ListAuthor;
+    var listCate = (List<Model.EF.ProductCategory>)ViewBag.ListCategory;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+        Information Product
+        <a class="link-property" href="/Admin/Product/Index"><i class="fa fa-list text-secondary"> </i></a>
+        <a class="link-property" href="/Admin/Product/Edit/@Model.ID"><i class="fa fa-edit text-secondary"></i></a>
+    </h1>
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dd>
+                    <img src="~/Data/ImgProduct/@Model.Image" width="200" height="300" />
+                </dd>
+            </div>
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Name) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Quantity) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Quantity)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Code) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Code)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Price) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.PromotionPrice) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PromotionPrice)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Warranty) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Warranty)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.ModifiedDate) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ModifiedDate)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.ModifiedBy) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ModifiedBy)
+                </dd>
+            </div>
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Translator) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Translator)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Weight) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Weight)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Pages) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Pages)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Size) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Size)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Form) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Form)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.PublishYear) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PublishYear)
+                </dd>
+                </div>
+            <div class="form-group col-md-3">
+                @for (int i = 0; i < listPub.Count; i++)
+                {
+                    if (listPub[i].ID == Model.PublisherID)
+                    {
+                        <dt>
+                            <h3>@Html.DisplayNameFor(model => model.PublisherID) :</h3>
+                        </dt>
+
+                        <dd>
+                            @listPub[i].Name
+                        </dd>
+                    }
+                }
+                @for (int i = 0; i < listCate.Count; i++)
+                {
+                    if (listCate[i].ID == Model.CategoryID)
+                    {
+                        <dt>
+                            <h3>@Html.DisplayNameFor(model => model.CategoryID) :</h3>
+                        </dt>
+
+                        <dd>
+                            @listCate[i].Name
+                        </dd>
+                    }
+                }
+                @for (int i = 0; i < listAut.Count; i++)
+                {
+                    if (listAut[i].ID == Model.AuthorID)
+                    {
+                        <dt>
+                            <h3>@Html.DisplayNameFor(model => model.AuthorID) :</h3>
+                        </dt>
+
+                        <dd>
+                            @listAut[i].Name
+                        </dd>
+                    }
+                }
+                
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Detail) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Detail)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.CreateDate) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreateDate)
+                </dd>
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.CreatedBy) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedBy)
+                </dd>
+
+                
+            </div>
+        </div>
+    </dl>
+</div>
+

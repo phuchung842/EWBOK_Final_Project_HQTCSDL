@@ -1,0 +1,62 @@
+﻿@model EWBOK_Final_Project.Models.LoginModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" height="300" width="1920" alt="fashion img">
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Tài khoản</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Home</a></li>
+                    <li class="active">Tài khoản</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- Cart view section -->
+<section id="aa-myaccount">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-myaccount-area">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="aa-myaccount-login">
+                                <h4>Đăng nhập</h4>
+                                @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "aa-login-form" }))
+                                {
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                    <label for="">Username<span>*</span></label>
+                                    @Html.TextBoxFor(model => model.UserName, new { @placeholder = "Username" })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                    <label for="">Password<span>*</span></label>
+                                    @Html.PasswordFor(model => model.PassWord, new { @class = "input-form", placeholder = "Password" })
+                                    @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
+                                    <button type="submit" class="aa-browse-btn">Đăng nhập</button>
+                                    @*<label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>*@
+                                    <p class="aa-lost-password"><a href="/Login/ForgotPassword">Quên mật khẩu</a></p>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @*<div class="aa-myaccount-register">
+                                <h4>Đăng ký</h4>
+                                @{ Html.RenderAction("Partial_Register", "Login");}
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Cart view section -->

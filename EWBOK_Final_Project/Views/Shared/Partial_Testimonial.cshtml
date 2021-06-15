@@ -1,0 +1,70 @@
+﻿@using Model.EF;
+@{ 
+    var monitor = (User)ViewBag.Monitor;
+    var member1 = (User)ViewBag.Member1;
+    var member2 = (User)ViewBag.Member2;
+    var member3 = (User)ViewBag.Member3;
+}
+<section id="aa-testimonial">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-testimonial-area">
+                    <ul class="aa-testimonial-slider">
+                        <!-- single slide -->
+                        <li>
+                            <div class="aa-testimonial-single">
+                                <img class="aa-testimonial-img" src="~/Data/ImgAdmin/@monitor.ImagePath" alt="testimonial img">
+                                <span class="fa fa-quote-left aa-testimonial-quote"></span>
+                                <p></p>
+                                <div class="aa-testimonial-info">
+                                    <p>@monitor.Name</p>
+                                    <span>Trưởng nhóm - Code chính</span>
+                                    <a href="#">@monitor.Email</a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- single slide -->
+                        <li>
+                            <div class="aa-testimonial-single">
+                                <img class="aa-testimonial-img" src="~/Data/ImgAdmin/@member1.ImagePath" alt="testimonial img">
+                                <span class="fa fa-quote-left aa-testimonial-quote"></span>
+                                <p></p>
+                                <div class="aa-testimonial-info">
+                                    <p>@member1.Name</p>
+                                    <span>Thành viên - Làm giao diện</span>
+                                    <a href="#">@member1.Email</a>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- single slide -->
+                        <li>
+                            <div class="aa-testimonial-single">
+                                <img class="aa-testimonial-img" src="~/Data/ImgAdmin/@member2.ImagePath" alt="testimonial img">
+                                <span class="fa fa-quote-left aa-testimonial-quote"></span>
+                                <p></p>
+                                <div class="aa-testimonial-info">
+                                    <p>@member2.Name</p>
+                                    <span>Thành viên - Thiết kế về cơ sở dữ liệu và phân tích thiết kế hệ thống</span>
+                                    <a href="#">@member2.Email</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="aa-testimonial-single">
+                                <img class="aa-testimonial-img" src="~/Data/ImgAdmin/@member3.ImagePath" alt="testimonial img">
+                                <span class="fa fa-quote-left aa-testimonial-quote"></span>
+                                <p></p>
+                                <div class="aa-testimonial-info">
+                                    <p>@member3.Name</p>
+                                    <span>Thành viên - Chuẩn bị tư liệu về đồ án</span>
+                                    <a href="#">@member3.Email</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

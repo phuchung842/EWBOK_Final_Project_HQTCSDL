@@ -1,0 +1,227 @@
+﻿@model Model.EF.Product
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var listPub = (List<Model.EF.Publisher>)ViewBag.ListPublisher;
+    var listAut = (List<Model.EF.Author>)ViewBag.ListAuthor;
+    var listCate = (List<Model.EF.ProductCategory>)ViewBag.ListCategory;
+}
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Edit Product | <a class="link-property" href="/Admin/Product/Index"><i class="fa fa-list text-secondary"></i></a></h1>
+    </div>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", @type = "number" })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Warranty, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    <select class="form-control" id="Warranty" t name="Warranty">
+                        @if (Model.Warranty == 0)
+                        {
+                            <option selected value="0">Không bảo hành</option>
+                        }
+                        else
+                        {
+                            <option value="0">Không bảo hành</option>
+                        }
+                        @for (int i = 1; i < 3; i++)
+                        {
+                            if (Model.Warranty == i)
+                            {
+                                <option selected value="@i">Bảo hành @i ngày</option>
+                            }
+                            else
+                            {
+                                <option value="@i"> Bảo hành @i ngày </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.ProductStatus, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div>
+                    <select class="form-control" id="ProductStatus" name="ProductStatus">
+                        @if (Model.ProductStatus == 0)
+                        {
+                            <option selected value="0"></option>
+                        }
+                        else
+                        {
+                            <option value="0"></option>
+                        }
+                        }
+                        @for (int i = 5; i < 86; i = i + 5)
+                        {
+                            if (Model.ProductStatus == i)
+                            {
+                                <option selected value="@i">Giảm @i%</option>
+                            }
+                            else
+                            {
+                                <option value="@i">Giảm @i%</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    <select class="form-control" id="CategoryID" name="CategoryID">
+                        @for (int i = 0; i < listCate.Count; i++)
+                        {
+                            if (Model.CategoryID == listCate[i].ID)
+                            {
+                                <option selected value="@listCate[i].ID">@listCate[i].Name</option>
+                            }
+                            else
+                            {
+                                <option value="@listCate[i].ID">@listCate[i].Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.PublisherID, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    <select class="form-control" id="PublisherID" name="PublisherID">
+                        @for (int i = 0; i < listPub.Count; i++)
+                        {
+                            if (Model.PublisherID == listPub[i].ID)
+                            {
+                                <option selected value="@listPub[i].ID">@listPub[i].Name</option>
+                            }
+                            else
+                            {
+                                <option value="@listPub[i].ID">@listPub[i].Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.AuthorID, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    <select class="form-control" id="AuthorID" name="AuthorID">
+                        @for (int i = 0; i < listAut.Count; i++)
+                        {
+                            if (Model.AuthorID == listAut[i].ID)
+                            {
+                                <option selected value="@listAut[i].ID">@listAut[i].Name</option>
+                            }
+                            else
+                            {
+                                <option value="@listAut[i].ID">@listAut[i].Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Translator, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Translator, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Translator, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Weight, new { @class = "form-control", @type = "number" })
+                    @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Pages, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Pages, new { @class = "form-control", @type = "number" })
+                    @Html.ValidationMessageFor(model => model.Pages, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.PublishYear, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.PublishYear, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PublishYear, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Size, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.Form, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div>
+                    @Html.TextBoxFor(model => model.Form, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Form, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Decription, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div>
+                @Html.TextAreaFor(model => model.Decription, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Decription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div>
+                @Html.TextAreaFor(model => model.Detail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div>
+                @Html.TextBox("postedFile", Model.Image, new { type = "file" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+            </div>
+        </div>
+    </div>
+}
+

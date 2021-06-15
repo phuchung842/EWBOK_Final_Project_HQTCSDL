@@ -1,0 +1,59 @@
+﻿@model List<Model.EF.About>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-2 text-gray-800">
+        About
+    </h1>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-light border-bottom-0">
+        <h6 class="m-0 font-weight-bold text-primary">About Information</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Create Date</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>Create Date</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a class="link-property" href="/Admin/About/Edit/@item.ID"><i class="fa fa-edit" style="font-size:20px;"></i></a>
+                                <a class="link-property" href="/Admin/About/Detail/@item.ID"><i class="fa fa-newspaper-o" style="font-size:20px;"></i></a>
+                            </td>
+                            <td>@item.CreateDate</td>
+                            <td>@item.Name</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Email</td>
+                            <td>@item.Address</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

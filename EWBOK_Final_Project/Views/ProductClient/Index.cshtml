@@ -1,0 +1,174 @@
+﻿@model List<Model.EF.Product>
+@using EWBOK_Final_Project.Common;
+@using Model.EF;
+@{
+    var listmodel = (List<Product>)Model;
+    ViewBag.Title = "ListAllProductByNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" width="1920" height="300" alt="fashion img">
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Sách @Session[Constants.STATUSNAME_PRODUCT]</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home/Index">Trang chủ</a></li>
+                    <li class="active">@Session[Constants.STATUSNAME_PRODUCT]</li>
+                    @if (Session[Constants.CATEGORY_ACTIVE] != null)
+                    {
+                        <li class="active">@(((ProductCategory)Session[Constants.CATEGORY_ACTIVE]).Name)</li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- product category -->
+<section id="aa-product-category">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3">
+                <div class="aa-product-catg-content">
+                    <div class="aa-product-catg-head">
+                        <div class="aa-product-catg-head-left">
+                            <form action="@Url.Action("ListAllProductPost","ProductClient")" method="get" class="aa-sort-form">
+                                <label for="">Sort by</label>
+                                <select name="keysort">
+                                    @if ((int)Session[Constants.SORT_ACTIVE] == 1)
+                                    {
+                                        <option value="1" selected>Mặc định</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="1">Mặc định</option>
+                                    }
+                                    @if ((int)Session[Constants.SORT_ACTIVE] == 2)
+                                    {
+                                        <option value="2" selected>Tên</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="2">Tên</option>
+                                    }
+                                    @if ((int)Session[Constants.SORT_ACTIVE] == 3)
+                                    {
+                                        <option value="3" selected>Giá</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="3">Giá</option>
+                                    }
+                                    @if ((int)Session[Constants.SORT_ACTIVE] == 4)
+                                    {
+                                        <option value="4" selected>Ngày</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="4">Ngày</option>
+                                    }
+                                </select>
+                                <select name="statussort">
+                                    @if ((int)Session[Constants.SORTSTATUS_ACTIVE] == 1)
+                                    {
+                                        <option value="1" selected>Giảm dần</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="1">Giảm dần</option>
+                                    }
+                                    @if ((int)Session[Constants.SORTSTATUS_ACTIVE] == 2)
+                                    {
+                                        <option value="2" selected>Tăng dần</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="2">Tăng dần</option>
+                                    }
+                                </select>
+                                <input type="submit" class="aa-filter-btn" value="Sắp xếp" />
+                            </form>
+                        </div>
+                        <div class="aa-product-catg-head-right">
+                            @if (Session[Constants.LISTPRODUCT_ACTIONNAME].ToString() != "ListAllProductByCategory")
+                            {
+                                if (Session[Constants.LISTPRODUCT_ACTIONNAME].ToString() != "ListAllProductByAuthor")
+                                {
+                                    <form action="@Url.Action(Session[Constants.LISTPRODUCT_ACTIONNAME].ToString(), "ProductClient")" method="get" class="aa-sort-form">
+                                        <input type="submit" class="aa-filter-btn" value="Tất cả" />
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form action="@Url.Action(Session[Constants.LISTPRODUCT_ACTIONNAME].ToString(), "ProductClient", new { id = (long)Session[Constants.AUTHOR_ID] })" method="get" class="aa-sort-form">
+                                        <input type="submit" class="aa-filter-btn" value="Tất cả" />
+                                    </form>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="aa-product-catg-body">
+                        <ul class="aa-product-catg">
+                            @for (int i = 0; i < Model.Count(); i++)
+                            {
+                                var link = "/" + Model[i].MetaTitle + "-" + Model[i].ID;
+                                <!-- start single product item -->
+                                <li>
+                                    <figure>
+                                        <a class="aa-product-img" href="@link"><img src="~/Data/ImgProduct/@Model[i].Image" alt="polo shirt img" height="300"></a>
+                                        @if (Model[i].Quantity > 0)
+                                        {
+                                            <a class="aa-add-card-btn" href="/them-vao-gio-@Model[i].ID"><span class="fa fa-shopping-cart"></span>Thêm vào giỏ</a>
+                                        }
+                                        <figcaption>
+                                            @if (Model[i].Name.Count() >= 40)
+                                            {
+                                                <h4 class="aa-product-title"><a href="@link">@Model[i].Name.ToString().Substring(0, 40) ...</a></h4>
+                                            }
+                                            else
+                                            {
+                                                <h4 class="aa-product-title"><a href="@link">@Model[i].Name.ToString()</a></h4>
+                                            }
+                                            @if (Model[i].ProductStatus > 0)
+                                            {
+                                                <span class="aa-product-price">@Model[i].PromotionPrice VNĐ</span><span class="aa-product-price"><del>@Model[i].Price VNĐ</del></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="aa-product-price">@Model[i].Price VNĐ</span>
+                                            }
+                                        </figcaption>
+                                    </figure>
+                                    <div class="aa-product-hvr-content">
+                                        <a href="/them-vao-yeu-thich-@Model[i].ID" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                        <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#@Model[i].ID"><span class="fa fa-search"></span></a>
+                                    </div>
+                                    <!-- product badge -->
+                                    @if (Model[i].Quantity <= 0)
+                                    {
+                                        <span class="aa-badge aa-sale" href="#">HẾT</span>
+                                    }
+                                    else if (Model[i].ProductStatus > 0)
+                                    {
+                                        <span class="aa-badge aa-sale" href="#">-@Model[i].ProductStatus %</span>
+                                    }
+                                    else
+                                    { }
+                                </li>
+                            }
+                        </ul>
+                        <!-- quick view modal -->
+                        @{ Html.RenderAction("Partial_QuickView", "Home", new { model = listmodel });}
+                        <!-- / quick view modal -->
+                    </div>
+                    @{ Html.RenderAction("Partial_Pagination", "Pagination");}
+                </div>
+            </div>
+            @{ Html.RenderAction("Partial_SideBarProduct", "Home");}
+        </div>
+    </div>
+</section>
+<!-- / product category -->

@@ -1,0 +1,70 @@
+﻿@using EWBOK_Final_Project.Common;
+@using Model.EF;
+@model EWBOK_Final_Project.Models.EditModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = (User)Session[Constants.USER_INFO];
+}
+
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" width="1920" height="300" />
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Fashion</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Trang chủ</a></li>
+                    <li class="active"><a href="/User/Edit">Chỉnh sửa</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- product category -->
+<section id="aa-product-category">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3">
+                <div class="aa-product-catg-content">
+                    <div class="aa-product-catg-head">
+                    </div>
+                    <div class="aa-product-catg-body">
+                        <form class="aa-login-form" action="@Url.Action("Edit","User")" method="post" enctype="multipart/form-data">
+                            @Html.LabelFor(x => x.Username)
+                            <input value="@user.UserName" name="Username" type="text" />
+
+                            @Html.LabelFor(x => x.Name)
+                            <input value="@user.Name" name="Name" type="text" />
+
+                            <label>Password</label><br />
+                            <a href="/User/ChangePassword" class="aa-browse-btn">Đổi mật khẩu</a><br />
+
+                            @Html.LabelFor(x => x.Email)
+                            <input value="@user.Email" name="Email" type="text" />
+
+                            @Html.LabelFor(x => x.Phone)
+                            <input value="@user.Phone" name="Phone" type="text" />
+
+                            @Html.LabelFor(x => x.Address)
+                            <input value="@user.Address" name="Address" type="text" />
+
+                            <label>Ảnh</label><br />
+                            <input type="file" name="postedFile" value="Chọn ảnh" class="aa-browse-btn" /><br />
+
+                            <button type="submit" class="aa-browse-btn">Lưu</button><br />
+                        </form>
+                        <!-- quick view modal -->
+                        <!-- / quick view modal -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-md-pull-9">
+            </div>
+        </div>
+    </div>
+</section>
+<br /><br />
+<!-- / product category -->

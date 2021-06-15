@@ -1,0 +1,54 @@
+﻿@model Model.EF.User
+@using EWBOK_Final_Project.Common
+@{
+    var user = (Model.EF.User)Model;
+    ViewBag.Title = "ConfirmCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" height="300" width="1920" alt="fashion img">
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Xác nhận mã</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Home</a></li>
+                    <li class="active">Tài khoản</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- Cart view section -->
+<section id="aa-myaccount">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-myaccount-area">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="aa-myaccount-login">
+                                <h4>Nhập mã xác nhận</h4>
+                                @if (TempData[EWBOK_Final_Project.Common.Constants.ALERT_CONFIRMPASSWORD] != null)
+                                {
+                                    <p></p>TempData[EWBOK_Final_Project.Common.Constants.ALERT_CONFIRMPASSWORD].ToString();
+                                }
+                                <form action="/Login/ConfirmCode" method="post" class="aa-login-form">
+                                    <label>Mã xác nhận</label>
+                                    <input name="code" type="text" />
+                                    <input name="id" value="@user.ID" hidden />
+                                    <input type="submit" value="Xác nhận" class="aa-browse-btn" />
+                                </form>
+                                <br />
+                                <a href="@Url.Action("ConfirmCode","Login",new { user = user })" class="aa-browse-btn">Gửi lại mã xác nhận</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Cart view section -->

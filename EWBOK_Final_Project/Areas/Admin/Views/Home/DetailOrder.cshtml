@@ -1,0 +1,111 @@
+﻿@model List<EWBOK_Final_Project.Areas.Admin.Model.JoinProduct_OrderDetail>
+@{
+    ViewBag.Title = "DetailOrder";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var order = (Model.EF.Order)ViewBag.Order;
+    var user = (Model.EF.User)ViewBag.User;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Detail Order</h1>
+</div>
+<div class="form-horizontal">
+    <hr />
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label>Mã đơn</label>
+            <div>
+                <input class="form-control" readonly value="@order.ID" />
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Tên người đặt</label>
+            <div>
+                <input class="form-control" readonly value="@user.Name" />
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Email người đặt</label>
+            <div>
+                <input class="form-control" readonly value="@user.Email" />
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Ngày</label>
+            <div>
+                <input class="form-control" readonly value="@order.CreateDate" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Ship Email</label>
+            <div>
+                <input class="form-control" readonly value="@order.ShipEmail" />
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Điện thoại người nhận</label>
+            <div>
+                <input class="form-control" readonly value="@order.ShipMobile" />
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Tên người nhận</label>
+            <div>
+                <input class="form-control" readonly value="@order.ShipName" />
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label>Địa chỉ giao hàng</label>
+            <div>
+                <input class="form-control" readonly value="@order.ShipAddress" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-light border-bottom-0">
+        <h6 class="m-0 font-weight-bold text-primary">Đơn</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Giá giảm</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Giá giảm</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.OrderDetail.Price</td>
+                            <td>@item.OrderDetail.PromotionPrice</td>
+                            <td>@item.OrderDetail.Quantity</td>
+                            <td>@(item.OrderDetail.Quantity*(item.OrderDetail.PromotionPrice.HasValue?item.OrderDetail.PromotionPrice.Value:item.OrderDetail.Price.Value))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

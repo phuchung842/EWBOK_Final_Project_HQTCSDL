@@ -1,0 +1,91 @@
+﻿@using EWBOK_Final_Project.Common;
+@using Model.EF;
+@{
+    var userinfo = (User)Session[Constants.USER_INFO];
+}
+<header id="aa-header">
+    <!-- start header top  -->
+    <div class="aa-header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-header-top-area">
+                        <!-- start header top left -->
+                        <div class="aa-header-top-left">
+                            <!-- start cellphone -->
+                            <div class="cellphone hidden-xs">
+                                <p><span class="fa fa-phone"></span>0908021048</p>
+                            </div>
+                            @if (userinfo != null)
+                            {
+                                if (userinfo.GroupID == Constants.GROUP_ADMIM || userinfo.GroupID == Constants.GROUP_EMP)
+                                {
+                                    <div class="cellphone hidden-xs">
+                                        <p><i class="fa fa-gear"></i><a href="/Admin/Home">Trang quản trị</a></p>
+                                    </div>
+                                }
+                            }
+                            <!-- / cellphone -->
+                        </div>
+                        <!-- / header top left -->
+                        <div class="aa-header-top-right">
+                            <ul class="aa-head-top-nav-right">
+                                @if (Session[Constants.USER_SESSION] == null)
+                                {
+                                    <li><a href="/Login/Register">Đăng ký</a></li>
+                                }
+                                <li class="hidden-xs"><a href="/yeu-thich">Ưa thích</a></li>
+                                <li class="hidden-xs"><a href="/gio-hang">Giỏ hàng</a></li>
+                                <li class="hidden-xs"><a href="/thanh-toan">Thanh toán</a></li>
+                                @if (Session[Constants.USER_SESSION] == null)
+                                {
+                                    <li><a href="" data-toggle="modal" data-target="#login-modal">Đăng nhập</a></li>
+                                }
+                                else
+                                {
+                                    <li class="hidden-xs"><a href="/User/Index">@userinfo.UserName</a></li>
+                                    <li class="hidden-xs"><a href="/Login/Logout">Đăng xuất</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / header top  -->
+    <!-- start header bottom  -->
+    <div class="aa-header-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-header-bottom-area">
+                        <!-- logo  -->
+                        <div class="aa-logo">
+                            <!-- Text based logo -->
+                            <a href="/Home">
+                                <span class="fa fa-shopping-cart"></span>
+                                <p><strong>EWBOK</strong> <span>Book Store</span></p>
+                            </a>
+                            <!-- img based logo -->
+                            <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
+                        </div>
+                        <!-- / logo  -->
+                        <!-- cart box -->
+                        @{ Html.RenderAction("Partial_Header_Cart", "Home");}
+                        <!-- / cart box -->
+                        <!-- search box -->
+                        <div class="aa-search-box">
+                            <form action="/ProductClient/Searching">
+                                <input type="text" name="searchkey" id="searchkey" placeholder="Tìm kiếm">
+                                <button type="submit"><span class="fa fa-search"></span></button>
+                            </form>
+                        </div>
+                        <!-- / search box -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / header bottom  -->
+</header>

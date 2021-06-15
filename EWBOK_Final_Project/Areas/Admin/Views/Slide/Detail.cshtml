@@ -1,0 +1,104 @@
+﻿@model Model.EF.Slide
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+        Information Slide
+        <a class="link-property" href="/Admin/Slide/Index"><i class="fa fa-list text-secondary"> </i></a>
+        <a class="link-property" href="/Admin/Slide/Edit/@Model.ID"><i class="fa fa-edit text-secondary"></i></a>
+    </h1>
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dd>
+                    <img src="~/Data/ImgSlide/@Model.Image" height="200" />
+                </dd>
+            </div>
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Title) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Decription) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Decription)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.DisplayOrder) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DisplayOrder)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.CreateDate) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreateDate)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.CreatedBy) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedBy)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.ModifiedDate) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ModifiedDate)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.ModifiedBy) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ModifiedBy)
+                </dd>
+            </div>
+        </div>
+        <dt>
+            <h3>@Html.DisplayNameFor(model => model.Status)</h3>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+

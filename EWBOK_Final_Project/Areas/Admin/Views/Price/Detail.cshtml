@@ -1,0 +1,79 @@
+﻿@model Model.EF.Price
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+        Information Price
+        <a class="link-property" href="/Admin/Price/Index"><i class="fa fa-list text-secondary"> </i></a>
+        <a class="link-property" href="/Admin/Price/Edit/@Model.ID"><i class="fa fa-edit text-secondary"></i></a>
+    </h1>
+</div>
+<div>
+    <br />
+    <dl class="dl-horizontal">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Name) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.PriceValue) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PriceValue)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.PromotionPrice) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PromotionPrice)
+                </dd>
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.CreateDate) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreateDate)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.CreatedBy) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedBy)
+                </dd>
+            </div>
+        </div>
+        <dt>
+            <h3>@Html.DisplayNameFor(model => model.Status)</h3>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+</div>
+

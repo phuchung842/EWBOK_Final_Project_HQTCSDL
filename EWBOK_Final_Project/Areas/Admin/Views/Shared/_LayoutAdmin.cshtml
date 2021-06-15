@@ -1,0 +1,307 @@
+﻿@using Model.EF;
+@using EWBOK_Final_Project.Common
+@{
+    ViewBag.Title = "_LayoutAdmin";
+    var userinfo = new User();
+    if (Session[Constants.USER_INFO] != null)
+    {
+        userinfo = (User)Session[Constants.USER_INFO];
+    }
+    Session[Constants.ERROR_ADMIN] = Constants.ERROR_ADMIN;
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>EWBOK-library</title>
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/Content/admin/css/style-starter.css" />
+    <link rel="stylesheet" href="~/Content/admin/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/Content/admin/datatables/dataTables.bootstrap4.min.css" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+</head>
+
+<body class="sidebar-menu-collapsed">
+    @*<div class="se-pre-con"></div>*@
+    <section>
+        <!-- sidebar menu start -->
+        <div class="sidebar-menu sticky-sidebar-menu">
+
+            <!-- logo start -->
+            <div class="logo">
+                <h1><a href="/Home/Index">EWBOK</a></h1>
+            </div>
+            <!-- if logo is image enable this -->
+            <!-- image logo --
+            <div class="logo">
+              <a href="index.html">
+                <img src="image-path" alt="Your logo" title="Your logo" class="img-fluid" style="height:35px;" />
+              </a>
+            </div>
+            <!-- //image logo -->
+
+            <div class="logo-icon text-center">
+                <a href="/Home/Index" title="logo"><img src="~/Content/admin/images/logo.png" alt="logo-icon"> </a>
+            </div>
+            <!-- //logo end -->
+
+            <div class="sidebar-menu-inner">
+
+                <!-- sidebar nav start -->
+                <ul class="nav nav-pills nav-stacked custom-nav">
+                    <li class="@Session[Constants.SLIDEBAR_AD_HOME].ToString()">
+                        <a href="/Admin/Home/Index"><i class="fa fa-tachometer"></i><span> Dashboard</span></a>
+                    </li>
+                    <li class="@Session[Constants.SLIDEBAR_AD_RENT].ToString() menu-list">
+                        <a href="/Admin/Rent/Index">
+                            <i class="fa fa-cubes"></i>
+                            <span>Rent<i class="lnr lnr-chevron-right"></i></span>
+                        </a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/Admin/Rent/Index"><i class="fa fa-cubes text-secondary" style="font-size:20px"></i>Renting</a></li>
+                            <li><a href="/Admin/Rent/WithoutRegis"><i class="fa fa-object-ungroup text-secondary" style="font-size:20px"></i>Without Regis</a></li>
+                            <li><a href="/Admin/Rent/WithRegis"><i class="fa fa-object-group text-secondary" style="font-size:20px"></i>With Regis</a></li>
+                        </ul>
+                    </li>
+                    <li class="@Session[Constants.SLIDEBAR_AD_USER].ToString() menu-list">
+                        <a href="/Admin/User/Index">
+                            <i class="fa fa-user-circle"></i>
+                            <span>User<i class="lnr lnr-chevron-right"></i></span>
+                        </a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/Admin/User/Index"><i class="fa fa-users text-secondary" style="font-size:20px"></i>List of User</a></li>
+                            <li><a href="/Admin/User/Create"><i class="fa fa-user-plus text-secondary" style="font-size:20px"></i>Add User</a></li>
+                        </ul>
+                    </li>
+                    <li class="@Session[Constants.SLIDEBAR_AD_PRODUCT].ToString() menu-list">
+                        <a href="/Admin/Product/Index">
+                            <i class="fa fa-book"></i>
+                            <span>Book<i class="lnr lnr-chevron-right"></i></span>
+                        </a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/Admin/Product/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>List of Product</a></li>
+                            <li><a href="/Admin/Product/Create"><i class="fa fa-plus-square text-secondary" style="font-size:20px"></i>Add Product</a></li>
+                        </ul>
+                    </li>
+                    <li class="@Session[Constants.SLIDEBAR_AD_PRODUCTCATEGORY].ToString() menu-list">
+                        <a href="/Admin/ProductCategory/Index">
+                            <i class="fa fa-sitemap"></i>
+                            <span>Book Category<i class="lnr lnr-chevron-right"></i></span>
+                        </a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/Admin/ProductCategory/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>List of Category</a></li>
+                            <li><a href="/Admin/ProductCategory/Create"><i class="fa fa-plus-square text-secondary" style="font-size:20px"></i>Add Category</a></li>
+                        </ul>
+                    </li>
+                    <li class="@Session[Constants.SLIDEBAR_AD_AUTHOR] menu-list">
+                        <a href="/Admin/Author/Index">
+                            <i class="fa fa-address-book"></i>
+                            <span>Author<i class="lnr lnr-chevron-right"></i></span>
+                        </a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/Admin/Author/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>List of Author</a></li>
+                            <li><a href="/Admin/Author/Create"><i class="fa fa-plus-square text-secondary" style="font-size:20px"></i>Add Author</a></li>
+                        </ul>
+                    </li>
+                    <li class="@Session[Constants.SLIDEBAR_AD_PUBLISHER] menu-list">
+                        <a href="/Admin/Publisher/Index">
+                            <i class="fa fa-globe"></i>
+                            <span>Publisher<i class="lnr lnr-chevron-right"></i></span>
+                        </a>
+                        <ul class="sub-menu-list">
+                            <li><a href="/Admin/Publisher/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>List of Publisher</a></li>
+                            <li><a href="/Admin/Publisher/Create"><i class="fa fa-plus-square text-secondary" style="font-size:20px"></i>Add Publisher</a></li>
+                        </ul>
+                    </li>
+                    <li class="@Session[Constants.SLIDEBAR_AD_PRICE]"><a href="/Admin/Price/Index"><i class="fa fa-money"></i><span>Price</span></a></li>
+                    @if (userinfo.GroupID == Constants.GROUP_ADMIM.ToString())
+                    {
+                        <li class="@Session[Constants.SLIDEBAR_AD_SYSTEM] menu-list">
+                            <a>
+                                <i class="fa fa-cogs"></i>
+                                <span>System<i class="lnr lnr-chevron-right"></i></span>
+                            </a>
+                            <ul class="sub-menu-list">
+                                <li><a href="/Admin/Log/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>List of Log</a></li>
+                                <li><a href="/Admin/Slide/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>List of Slide</a></li>
+                                <li><a href="/Admin/Feedback/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>List of Feedback</a></li>
+                                <li><a href="/Admin/About/Index"><i class="fa fa-list text-secondary" style="font-size:20px"></i>About</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                <!-- //sidebar nav end -->
+                <!-- toggle button start -->
+                <a class="toggle-btn">
+                    <i class="fa fa-angle-double-left menu-collapsed__left"><span>Collapse Sidebar</span></i>
+                    <i class="fa fa-angle-double-right menu-collapsed__right"></i>
+                </a>
+                <!-- //toggle button end -->
+            </div>
+        </div>
+        <!-- //sidebar menu end -->
+        <!-- header-starts -->
+        <div class="header sticky-header">
+            <!-- notification menu start -->
+            <div class="menu-right">
+                <div class="navbar user-panel-top">
+                    <div class="search-box">
+                        <form action="#search-results.html" method="get">
+                            <input class="search-input" placeholder="Search Here..." type="search" id="search">
+                            <button class="search-submit" value=""><span class="fa fa-search"></span></button>
+                        </form>
+                    </div>
+                    <div class="user-dropdown-details d-flex">
+                        <div class="profile_details_left">
+                            <ul class="nofitications-dropdown">
+                                @if (userinfo.GroupID == Constants.GROUP_ADMIM.ToString())
+                                {
+                                    { Html.RenderAction("Partial_Notification", "Home"); }
+                                }
+                            </ul>
+                        </div>
+                        <div class="profile_details">
+                            <ul>
+                                <li class="dropdown profile_details_drop">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        <div class="profile_img">
+                                            <img src="~/Data/ImgAdmin/@userinfo.ImagePath" class="rounded-circle" alt="" />
+                                            <div class="user-active">
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
+                                        <li class="user-info">
+                                            <h5 class="user-name">@userinfo.UserName</h5>
+                                            <span class="status ml-2">@userinfo.GroupID</span>
+                                        </li>
+                                        <li> <a href="/Admin/User/Edit/@userinfo.ID"><i class="lnr lnr-user"></i>My Profile</a> </li>
+                                        <li class="logout"> <a href="/Admin/Login/Logout"><i class="fa fa-power-off"></i> Logout</a> </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--notification menu end -->
+        </div>
+        <!-- //header-ends -->
+        <!-- main content start -->
+        <div class="main-content">
+            <!-- content -->
+            <div class="container-fluid content-top-gap">
+                @if (TempData["AlertMessage"] != null)
+                {
+                    <div id="AlertBox" class="alert @TempData["AlertType"] hide">
+                        @TempData["AlertMessage"]
+                    </div>
+                }
+
+                @RenderBody()
+            </div>
+        </div>
+        <!-- main content end-->
+    </section>
+    <!--footer section start-->
+    <footer class="dashboard">
+        <p>
+            &copy 2020 Collective. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank" class="text-primary">W3layouts.</a>
+        </p>
+    </footer>
+    <!--footer section end-->
+    <!-- move top -->
+    <button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
+        <span class="fa fa-angle-up"></span>
+    </button>
+    <script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("movetop").style.display = "block";
+            } else {
+                document.getElementById("movetop").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+    <!-- /move top -->
+
+
+    <script src="~/Content/admin/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/admin/js/jquery-1.10.2.min.js"></script>
+
+    <!-- chart js -->
+    <script src="~/Content/admin/js/Chart.min.js"></script>
+    <script src="~/Content/admin/js/utils.js"></script>
+    <!-- //chart js -->
+    <!-- Different scripts of charts.  Ex.Barchart, Linechart -->
+    @RenderSection("jsChart", false);
+    <!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
+
+
+    <script src="~/Content/admin/js/jquery.nicescroll.js"></script>
+    <script src="~/Content/admin/js/scripts.js"></script>
+
+    <!-- close script -->
+    <script>
+        var closebtns = document.getElementsByClassName("close-grid");
+        var i;
+
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function () {
+                this.parentElement.style.display = 'none';
+            });
+        }
+    </script>
+    <!-- //close script -->
+    <!-- disable body scroll when navbar is in active -->
+    <script>
+        $(function () {
+            $('.sidebar-menu-collapsed').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+    </script>
+    <!-- disable body scroll when navbar is in active -->
+    <!-- loading-gif Js -->
+    <script src="~/Content/admin/js/modernizr.js"></script>
+    <script>
+        $(window).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");;
+        });
+    </script>
+    <!--// loading-gif Js -->
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Content/admin/js/bootstrap.min.js"></script>
+    @*<script src="//datatables.net/download/build/nightly/jquery.dataTables.js?latest"></script>*@
+    <script src="~/Content/admin/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/admin/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/admin/datatables/datatables-demo.js"></script>
+    <script src="https://kit.fontawesome.com/yourcode.js"></script>
+    <script src="~/Content/admin/js/admin.js"></script>
+    @RenderSection("jsFooter", false);
+</body>
+
+</html>
+

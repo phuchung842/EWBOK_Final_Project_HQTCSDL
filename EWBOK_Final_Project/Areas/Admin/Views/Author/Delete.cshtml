@@ -1,0 +1,92 @@
+﻿@model Model.EF.Author
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Delete Author | <a class="link-property" href="/Admin/Author/Index"><i class="fa fa-list text-secondary"></i></a></h1>
+</div>
+<div class="card-header py-3 border-bottom-xingcheng-light">
+    <h3>Are you sure you want to delete this author ?</h3>
+</div>
+<div>
+    <br />
+    <dl class="dl-horizontal">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dd>
+                    <img class="rounded-circle" src="~/Data/ImgAuthor/@Model.Image" width="100" height="100" />
+                </dd>
+            </div>
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Name) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.PlaceOfBirth) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PlaceOfBirth)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.NickName) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NickName)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Birth) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Birth)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.DateOfDeath) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DateOfDeath)
+                </dd>
+
+            </div>
+        </div>
+        <dt>
+            <h3>@Html.DisplayNameFor(model => model.Status)</h3>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("Delete", "Author", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-primary btn-user btn-block" />
+        </div>
+    }
+</div>
+

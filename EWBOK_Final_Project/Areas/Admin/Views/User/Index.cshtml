@@ -1,0 +1,104 @@
+﻿@model List<Model.EF.User>
+@using EWBOK_Final_Project.Common;
+@using Model.EF
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section jsFooter{
+    <script src="~/Content/admin/js/controller/userController.js"></script>
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-2 text-gray-800">
+        Users | <a class="link-property" href="/Admin/User/Create"><i class="fa fa-user-plus text-secondary"></i></a>
+    </h1>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-light border-bottom-0">
+        <h6 class="m-0 font-weight-bold text-primary">Users Information</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>Group</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>Group</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        if (((User)Session[Constants.USER_INFO]).ID.ToString() == item.ID.ToString())
+                        {
+                            <tr>
+                                <td>
+                                    <a class="link-property" href="/Admin/User/Edit/@item.ID"><i class="fa fa-edit" style="font-size:20px; "></i></a>
+                                    <a class="link-property" href="/Admin/User/Detail/@item.ID"><i class="fa fa-id-card" style="font-size:20px;"></i></a>
+                                </td>
+                                <td><strong>@item.UserName</strong></td>
+                                <td><strong>@item.Name</strong></td>
+                                <td><strong>@item.GroupID</strong></td>
+                                <td><strong>@item.Address</strong></td>
+                                <td><strong>@item.Email</strong></td>
+                                <td><strong>@item.Phone</strong></td>
+                                <td>
+                                    <a class="text-danger"><i class="fa fa-check"></i></a>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <a class="link-property" href="/Admin/User/Edit/@item.ID"><i class="fa fa-edit" style="font-size:20px; "></i></a>
+                                    <a class="link-property" href="/Admin/User/Detail/@item.ID"><i class="fa fa-id-card" style="font-size:20px;"></i></a>
+                                    <a class="link-property" href="/Admin/User/Delete/@item.ID"><i class="fa fa-user-times" style="font-size:20px"></i></a>
+                                </td>
+                                <td>@item.UserName</td>
+                                <td>@item.Name</td>
+                                <td>@item.GroupID</td>
+                                <td>@item.Address</td>
+                                <td>@item.Email</td>
+                                <td>@item.Phone</td>
+                                <td>
+                                    <a href="#" class="btn-active" data-id="@item.ID">
+                                        @if (@item.Status == false)
+                                        {
+                                            <i class="fa fa-lock"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-check"></i>
+                                        }
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @*@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@
+        </div>
+    </div>
+</div>

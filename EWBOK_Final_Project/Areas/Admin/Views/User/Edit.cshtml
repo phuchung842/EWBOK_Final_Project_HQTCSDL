@@ -1,0 +1,125 @@
+﻿@model Model.EF.User
+@using EWBOK_Final_Project.Common
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Edit User | <a class="link-property" href="/Admin/User/Index"><i class="fa fa-users text-secondary"></i></a></h1>
+    </div>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2", @readonly = "readonly" })
+                <div>
+                    @*<h3><i class="fa fa-user-circle"></i> | @Html.DisplayFor(model => model.UserName, new { @class = "form-control", @readonly = "readonly" })</h3>*@
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @readonly = "readonly" })
+                    @*@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.TextBox("postedFile", "", new { type = "file" })
+                    @*<input type="submit" value="Upload"/>*@
+                    @Html.ValidationMessageFor(model => model.ImagePath, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.GroupID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    <select name="GroupID" class="form-control">
+                        @if (Model.GroupID == Constants.GROUP_ADMIM)
+                        {
+                            <option selected value="@Constants.GROUP_ADMIM">ADMIN</option>
+                            <option value="@Constants.GROUP_EMP">EMPLOYEE</option>
+                            <option value="@Constants.GROUP_CLIENT">CLIENT</option>
+                        }
+                        else if (Model.GroupID == Constants.GROUP_EMP)
+                        {
+                            <option value="@Constants.GROUP_ADMIM">ADMIN</option>
+                            <option selected value="@Constants.GROUP_EMP">EMPLOYEE</option>
+                            <option value="@Constants.GROUP_CLIENT">CLIENT</option>
+                        }
+                        else
+                        {
+                            <option value="@Constants.GROUP_ADMIM">ADMIN</option>
+                            <option value="@Constants.GROUP_EMP">EMPLOYEE</option>
+                            <option selected value="@Constants.GROUP_CLIENT">CLIENT</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="custom-control custom-checkbox">
+                @*<div class="col-md-10">*@
+                @Html.CheckBoxFor(model => model.Status, new { @class = "form-check-input", id = "gridCheck" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                @*</div>*@
+            </div>
+        </div>
+        @Html.HiddenFor(x=>x.ColorWebsite)
+        @Html.HiddenFor(x=>x.ConfirmStatus)
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <input type="submit" value="Update" class="btn btn-primary btn-user btn-block" />
+            </div>
+        </div>
+    </div>
+}
+

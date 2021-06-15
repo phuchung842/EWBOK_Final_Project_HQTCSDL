@@ -1,0 +1,70 @@
+﻿@model Model.sp_Models.RegisModel
+@{
+    ViewBag.Title = "WithRegis";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-2 text-gray-800">
+        Registration
+    </h1>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 bg-light border-bottom-0">
+        <h6 class="m-0 font-weight-bold text-primary">Registration Information</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <form method="post" action="/Admin/Rent/WithRegis" id="frm-example">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Choose</th>
+                            <th>Day Rent</th>
+                            <th>Name</th>
+                            <th>IDNumber</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Choose</th>
+                            <th>Day Rent</th>
+                            <th>Name</th>
+                            <th>IDNumber</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @for (int i = 0; i < Model.ListRegis.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.CheckBoxFor(model => model.ListRegis[i].IsChecked)
+                                    <span class="checkmark"></span>
+                                    @Html.HiddenFor(model => model.ListRegis[i].ProductID)
+                                    @Html.HiddenFor(model => model.ListRegis[i].UserID)
+
+                                    @*<input hidden name="ProductID" value="@item.ProductID"/>
+                                        <input hidden name="UserID" value="@item.UserID" />*@
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ListRegis[i].DayRent, new { htmlAttributes = new { @Value = 1 } })
+                                    @Html.ValidationMessageFor(model => model.ListRegis[i].DayRent, "", new { @class = "text-danger" })
+                                </td>
+                                <td>@Model.ListRegis[i].Name</td>
+                                <td>@Model.ListRegis[i].IDNumber</td>
+                                <td>@Model.ListRegis[i].Quantity</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <div class="form-group col-md-3">
+                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Accept" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

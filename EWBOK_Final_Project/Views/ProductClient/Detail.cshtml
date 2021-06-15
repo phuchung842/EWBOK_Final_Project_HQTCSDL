@@ -1,0 +1,327 @@
+﻿@model Model.EF.Product
+@using Model.EF;
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listRelatedProduct = (List<Product>)ViewBag.RelatedProduct;
+    var listcate = (List<ProductCategory>)ViewBag.Category;
+    var listaut = (List<Author>)ViewBag.Author;
+    var listpub = (List<Publisher>)ViewBag.Publisher;
+    var listrentproduct = (List<RentProduct>)ViewBag.RentProduct;
+    ProductCategory productCategory = null;
+    Author author = null;
+    Publisher publisher = null;
+    for (int i = 0; i < listcate.Count; i++)
+    {
+        if (listcate[i].ID == Model.CategoryID)
+        {
+            productCategory = listcate[i];
+        }
+    }
+    for (int i = 0; i < listaut.Count; i++)
+    {
+        if (listaut[i].ID == Model.AuthorID)
+        {
+            author = listaut[i];
+        }
+    }
+    for (int i = 0; i < listpub.Count; i++)
+    {
+        if (listpub[i].ID == Model.PublisherID)
+        {
+            publisher = listpub[i];
+        }
+    }
+}
+
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" alt="fashion img" height="300" width="1920" />
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>@productCategory.Name</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Trang chủ</a></li>
+                    <li><a href="#">Sách</a></li>
+                    <li class="active">@productCategory.Name</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- product category -->
+<section id="aa-product-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-product-details-area">
+                    <div class="aa-product-details-content">
+                        <div class="row">
+                            <!-- Modal view slider -->
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                <div class="aa-product-view-slider">
+                                    <div id="demo-1" class="simpleLens-gallery-container">
+                                        <div class="simpleLens-container">
+                                            <div class="simpleLens-big-image-container"><img src="~/Data/ImgProduct/@Model.Image" class="simpleLens-big-image"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal view content -->
+                            <div class="col-md-7 col-sm-7 col-xs-12">
+                                <div class="aa-product-view-content">
+                                    <h3>@Model.Name</h3>
+                                    <div class="aa-price-block">
+                                        @if (Model.ProductStatus > 0)
+                                        {
+                                            <span class="aa-product-view-price">@Model.PromotionPrice VNĐ|</span><span class="aa-product-view-price"><del>@Model.Price VNĐ</del></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="aa-product-view-price">@Model.Price VNĐ</span>
+                                        }
+                                        @if (Model.Quantity > 0)
+                                        {
+                                            <p class="aa-product-avilability">Tình trạng: <span>Còn hàng</span></p>
+                                        }
+                                        else
+                                        {
+                                            <p class="aa-product-avilability">Tình trạng: <span>Hết hàng</span></p>
+                                        }
+                                    </div>
+                                    <h4>Tác giả : <a href="/san-pham-theo-tac-gia-@author.ID">@author.Name</a></h4>
+                                    <h4>Nhà xuất bản : <a href="">@publisher.Name</a></h4>
+                                    <form action="/Cart/AddItem">
+                                        <div class="aa-prod-quantity">
+                                            <select id="quantity" name="quantity">
+                                                @if (Model.Quantity > 6)
+                                                {
+                                                    <option value="1" selected>1</option>
+                                                    for (int j = 2; j <= 6; j++)
+                                                    {
+                                                        <option value="@j">@j</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (Model.Quantity > 0)
+                                                    {
+                                                        for (int j = 1; j <= Model.Quantity; j++)
+                                                        {
+                                                            <option value="@j">@j</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="0">0</option>
+                                                    }
+                                                }
+                                            </select>
+                                            <p class="aa-prod-category">
+                                                Thể loại: <a href="/san-pham-theo-the-loai-@Model.CategoryID">@productCategory.Name</a>
+                                            </p>
+                                            <input name="id" type="number" hidden value="@Model.ID" />
+                                        </div>
+                                        <div class="aa-prod-view-bottom">
+                                            @if (Model.Quantity > 0)
+                                            {
+                                                <input class="aa-add-to-cart-btn" value="Thêm vào giỏ" type="submit">
+                                            }
+                                            <a class="aa-add-to-cart-btn" href="/them-vao-yeu-thich-@Model.ID">Wishlist</a>
+
+                                        </div>
+                                    </form>
+                                    <form action="/RentRegistration/Regis">
+                                        <div class="aa-prod-view-bottom">
+                                            <select id="quantity" name="quantity">
+                                                @{ 
+                                                    int quantitytorent = 0;
+                                                    if (listrentproduct.Count <= 10)
+                                                    {
+                                                        quantitytorent = listrentproduct.Count;
+                                                    }
+                                                    else
+                                                    {
+                                                        quantitytorent = 10;
+                                                    }
+
+                                                    for (int i = 1; i <= quantitytorent; i++)
+                                                    {
+                                                        if (i == 1)
+                                                        {
+                                                            <option value="@i" selected>@i</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@i">@i</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                            <input name="id" type="number" hidden value="@Model.ID" />
+                                            <input class="aa-add-to-cart-btn" value="Đăng ký thuê" type="submit">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aa-product-details-bottom">
+                        <ul class="nav nav-tabs" id="myTab2">
+                            <li><a href="#description" data-toggle="tab">Nội dung</a></li>
+                            <li><a href="#detail" data-toggle="tab">Chi tiết sách</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="description">
+                                <p>@Model.Decription</p>
+                            </div>
+                            <div class="tab-pane fade " id="detail">
+                                <div class="aa-product-review-area">
+                                    <h4>Thông tin chi tiết sách</h4>
+                                    <table class="table table-hover table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th>@Html.LabelFor(model => model.Code)</th>
+                                                <td>@Model.Code</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.Translator)</td>
+                                                <td>@Model.Translator</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.Weight)</td>
+                                                <td>@Model.Weight g</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.Pages)</td>
+                                                <td>@Model.Pages Trang</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.Size)</td>
+                                                <td>@Model.Size</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.Form)</td>
+                                                <td>@Model.Form</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.IncludeVAT)</td>
+                                                <td>@Model.IncludeVAT</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.PublishYear)</td>
+                                                <td>@Model.PublishYear</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.PublisherID)</td>
+                                                <td>@publisher.Name</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.AuthorID)</td>
+                                                <td>@author.Name</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.CategoryID)</td>
+                                                <td>@productCategory.Name</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@Html.LabelFor(model => model.Warranty)</td>
+                                                <td>@Model.Warranty</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Related product -->
+                    <div class="aa-product-related-item">
+                        <h3>Sách liên quan</h3>
+                        @{
+                            bool flag = false;
+                            List<int> listpreposrd = new List<int>();
+                            var listmodel = new List<Product>();
+                            int quantityRelatedProduct = 8;
+                            if (listRelatedProduct.Count <= 8)
+                            {
+                                quantityRelatedProduct = listRelatedProduct.Count;
+                            }
+                        }
+                        <ul class="aa-product-catg aa-related-item-slider">
+                            <!-- start single product item -->
+                            @for (int i = 0; i < quantityRelatedProduct; i++)
+                            {
+                                Random rd = new Random();
+                                int posrd = rd.Next(0, listRelatedProduct.Count);
+                                bool flagchecked = true;
+                                for (int j = 0; j < listpreposrd.Count; j++)
+                                {
+                                    if (flag == false)
+                                    { break; }  /*Kiểm tra lần đầu*/
+                                    if (posrd == listpreposrd[j] && flag == true)
+                                    {
+                                        flagchecked = false;   /*Kiểm tra có trùng với sản phẩm trước*/
+                                        break;
+                                    }
+                                }
+                                if (flagchecked == false)
+                                { quantityRelatedProduct++; }
+                                else
+                                {
+                                    flag = true;
+                                    listpreposrd.Add(posrd);
+                                    listmodel.Add(listRelatedProduct[posrd]);
+                                    <li>
+                                        <figure>
+                                            <a class="aa-product-img" href="/ProductClient/Detail/@listRelatedProduct[posrd].ID"><img src="~/Data/ImgProduct/@listRelatedProduct[posrd].Image" height="300" width="250" alt="polo shirt img"></a>
+                                            <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                            <figcaption>
+                                                @if (listRelatedProduct[posrd].Name.Count() >= 40)
+                                                {
+                                                    <h4 class="aa-product-title"><a href="/ProductClient/Detail/@listRelatedProduct[posrd].ID">@listRelatedProduct[posrd].Name.ToString().Substring(0, 40) ...</a></h4>
+                                                }
+                                                else
+                                                {
+                                                    <h4 class="aa-product-title"><a href="/ProductClient/Detail/@listRelatedProduct[posrd].ID">@listRelatedProduct[posrd].Name.ToString()</a></h4>
+                                                }
+                                                @if (listRelatedProduct[posrd].ProductStatus > 0)
+                                                {
+                                                    <span class="aa-product-price">@listRelatedProduct[posrd].PromotionPrice VNĐ</span><span class="aa-product-price"><del>@listRelatedProduct[posrd].Price VNĐ</del></span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="aa-product-price">@listRelatedProduct[posrd].Price VNĐ</span>
+                                                }
+                                            </figcaption>
+                                        </figure>
+                                        <div class="aa-product-hvr-content">
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                            <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#@listRelatedProduct[posrd].ID"><span class="fa fa-search"></span></a>
+                                        </div>
+                                        <!-- product badge -->
+                                        @if (listRelatedProduct[posrd].ProductStatus > 0)
+                                        {
+                                            <span class="aa-badge aa-sale" href="#">-@listRelatedProduct[posrd].ProductStatus %</span>
+                                        }
+                                        else
+                                        {
+                                            @*<span class="aa-badge aa-sale" href="#"></span>*@
+                                        }
+                                    </li>
+                                }
+                            }
+                        </ul>
+                        <!-- quick view modal -->
+                        @{ Html.RenderAction("Partial_QuickView", "Home", new { model = listmodel });}
+                        <!-- / quick view modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / product category -->

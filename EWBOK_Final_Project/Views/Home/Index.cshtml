@@ -1,0 +1,452 @@
+﻿@using Model.EF
+@using EWBOK_Final_Project.Common
+@{
+    var listnew = (List<Product>)ViewBag.NewProduct;
+    var listview = (List<Product>)ViewBag.BestViewProduct;
+    var listdiscount = (List<Product>)ViewBag.DiscountProduct;
+    var listseller = (List<Product>)ViewBag.BestSellerProduct;
+    var listwish = (List<Product>)ViewBag.WishProduct;
+    List<Product> listmodal = listnew.Concat(listview).Concat(listdiscount).Concat(listseller).Concat(listwish).ToList();
+    ProductComparer productComparer = new ProductComparer();
+    listmodal = listmodal.Distinct(productComparer).ToList();
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Start slider -->
+@{ Html.RenderAction("Partial_Slide", "Home");}
+<!-- / slider -->
+<!-- Start Promo section -->
+<section id="aa-promo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-promo-area">
+                    <div class="row">
+                        <!-- promo left -->
+                        <div class="col-md-5 no-padding">
+                            <div class="aa-promo-left">
+                                <div class="aa-promo-banner">
+                                    <img src="~/Data/ImgPromo/top-7-books-that-changed-the-world.jpg" alt="img">
+                                    <div class="aa-prom-content">
+                                        <h4>***</h4>
+                                        <h4><a href="#">Mảnh ghép</a></h4>
+                                        <h4>***</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- promo right -->
+                        <div class="col-md-7 no-padding">
+                            <div class="aa-promo-right">
+                                <div class="aa-single-promo-right">
+                                    <div class="aa-promo-banner">
+                                        <img src="~/Data/ImgPromo/doc-mot-cuon-sach-hay-cung-nhu-tro-chuyen-voi-mot-nguoi-ban-thong-minh-1.jpg" alt="img">
+                                        <div class="aa-prom-content">
+                                            <h4><a href="#">Tri thức</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="aa-single-promo-right">
+                                    <div class="aa-promo-banner">
+                                        <img src="~/Data/ImgPromo/hongdao-184909034927-7-cuon-sach-danh-cho-nhung-nguoi-khao-khat-lam-giau-trong-nam-2018.jpg" alt="img">
+                                        <div class="aa-prom-content">
+                                            <h4><a href="#">Sức mạnh</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="aa-single-promo-right">
+                                    <div class="aa-promo-banner">
+                                        <img src="~/Data/ImgPromo/photo1552354590566-1552354590734-crop-15523545973941877966906.jpg" alt="img">
+                                        <div class="aa-prom-content">
+                                            <h4><a href="#">Cuộc sống</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="aa-single-promo-right">
+                                    <div class="aa-promo-banner">
+                                        <img src="~/Data/ImgPromo/sach-quan-tri-tai-chinh-1.jpg" alt="img">
+                                        <div class="aa-prom-content">
+                                            <h4><a href="#">Con người</a></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Promo section -->
+<!-- Products section -->
+<section id="aa-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-product-area">
+                        <div class="aa-product-inner">
+                            <!-- start prduct navigation -->
+                            <ul class="nav nav-tabs aa-products-tab">
+                                <li class="active"><a href="#new" data-toggle="tab">Sách mới</a></li>
+                                <li><a href="#view" data-toggle="tab">Sách ưa chuộng</a></li>
+                                <li><a href="#wish" data-toggle="tab">Sách ưa thích</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- Start new product category -->
+                                <div class="tab-pane fade in active" id="new">
+                                    <ul class="aa-product-catg">
+                                        @for (int i = 0; i < listnew.Count(); i++)
+                                        {
+                                            var link = "/" + listnew[i].MetaTitle.ToString() + "-" + listnew[i].ID;
+                                            <!-- start single product item -->
+                                            <li>
+                                                <figure>
+                                                    @*<a class="aa-product-img" href="/ProductClient/Detail/@listnew[i].ID"><img src="~/Data/ImgProduct/@listnew[i].Image" alt="polo shirt img" height="300"></a>*@
+                                                    <a class="aa-product-img" href="@link"><img src="~/Data/ImgProduct/@listnew[i].Image" alt="polo shirt img" height="300"></a>
+                                                    @if (listnew[i].Quantity > 0)
+                                                    {
+                                                        <a class="aa-add-card-btn" href="/them-vao-gio-@listnew[i].ID"><span class="fa fa-shopping-cart"></span>Thêm vào giỏ</a>
+                                                    }
+                                                    <figcaption>
+                                                        @if (listnew[i].Name.Count() >= 40)
+                                                        {
+                                                            @*<h4 class="aa-product-title"><a href="/ProductClient/Detail/@listnew[i].ID">@listnew[i].Name.ToString().Substring(0, 40) ...</a></h4>*@
+                                                            <h4 class="aa-product-title"><a href="@link">@listnew[i].Name.ToString().Substring(0, 40) ...</a></h4>
+                                                        }
+                                                        else
+                                                        {
+                                                            @*<h4 class="aa-product-title"><a href="/ProductClient/Detail/@listnew[i].ID">@listnew[i].Name.ToString()</a></h4>*@
+                                                            <h4 class="aa-product-title"><a href="@link">@listnew[i].Name.ToString()</a></h4>
+                                                        }
+                                                        @if (listnew[i].ProductStatus > 0)
+                                                        {
+                                                            <span class="aa-product-price">@listnew[i].PromotionPrice VNĐ</span><span class="aa-product-price"><del>@listnew[i].Price VNĐ</del></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price">@listnew[i].Price VNĐ</span>
+                                                        }
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="/them-vao-yeu-thich-@listnew[i].ID" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#@listnew[i].ID"><span class="fa fa-search"></span></a>
+                                                </div>
+                                                <!-- product badge -->
+                                                @if (listnew[i].Quantity <= 0)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">HẾT</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">MỚI</span>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                    <a class="aa-browse-btn" href="/san-pham-moi">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                                </div>
+                                <!-- / new product category -->
+                                <!-- start view product category -->
+                                <div class="tab-pane fade" id="view">
+                                    <ul class="aa-product-catg">
+                                        <!-- start single product item -->
+                                        @for (int i = 0; i < listview.Count(); i++)
+                                        {
+                                            var link = "/" + listview[i].MetaTitle + "-" + listview[i].ID;
+                                            <!-- start single product item -->
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="@link"><img src="~/Data/ImgProduct/@listview[i].Image" alt="polo shirt img" height="300"></a>
+                                                    @if (listview[i].Quantity > 0)
+                                                    {
+                                                        <a class="aa-add-card-btn" href="/them-vao-gio-@listview[i].ID"><span class="fa fa-shopping-cart"></span>Thêm vào giỏ</a>
+                                                    }
+                                                    <figcaption>
+                                                        @if (listview[i].Name.Count() >= 40)
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listview[i].Name.ToString().Substring(0, 40) ...</a></h4>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listview[i].Name.ToString()</a></h4>
+                                                        }
+                                                        @if (listview[i].ProductStatus > 0)
+                                                        {
+                                                            <span class="aa-product-price">@listview[i].PromotionPrice VNĐ</span><span class="aa-product-price"><del>@listview[i].Price VNĐ</del></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price">@listview[i].Price VNĐ</span>
+                                                        }
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="/them-vao-yeu-thich-@listview[i].ID" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#@listview[i].ID"><span class="fa fa-search"></span></a>
+                                                </div>
+                                                <!-- product badge -->
+                                                @if (listview[i].Quantity <= 0)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">HẾT</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#"><span class="glyphicon glyphicon-eye-open" style="font-size:24px"></span></span>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                    <a class="aa-browse-btn" href="/san-pham-nhieu-luot-xem">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                                </div>
+                                <!-- / view product category -->
+                                <!-- start wish product category -->
+                                <div class="tab-pane fade" id="wish">
+                                    <ul class="aa-product-catg">
+                                        <!-- start single product item -->
+                                        @for (int i = 0; i < listwish.Count(); i++)
+                                        {
+                                            var link = "/" + listwish[i].MetaTitle + "-" + listwish[i].ID;
+                                            <!-- start single product item -->
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="@link"><img src="~/Data/ImgProduct/@listwish[i].Image" alt="polo shirt img" height="300"></a>
+                                                    @if (listwish[i].Quantity > 0)
+                                                    {
+                                                        <a class="aa-add-card-btn" href="/them-vao-gio-@listwish[i].ID"><span class="fa fa-shopping-cart"></span>Thêm vào giỏ</a>
+                                                    }
+                                                    <figcaption>
+                                                        @if (listwish[i].Name.Count() >= 40)
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listwish[i].Name.ToString().Substring(0, 40) ...</a></h4>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listwish[i].Name.ToString()</a></h4>
+                                                        }
+                                                        @if (listwish[i].ProductStatus > 0)
+                                                        {
+                                                            <span class="aa-product-price">@listwish[i].PromotionPrice VNĐ</span><span class="aa-product-price"><del>@listwish[i].Price VNĐ</del></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price">@listwish[i].Price VNĐ</span>
+                                                        }
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="/them-vao-yeu-thich-@listwish[i].ID" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#@listwish[i].ID"><span class="fa fa-search"></span></a>
+                                                </div>
+                                                <!-- product badge -->
+                                                @if (listview[i].Quantity <= 0)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">HẾT</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#"><span class="glyphicon glyphicon-heart-empty" style="font-size:24px"></span></span>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                    <a class="aa-browse-btn" href="/san-pham-nhieu-luot-thich">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                                </div>
+                                <!-- / wish product category -->
+                            </div>
+                            <!-- quick view modal -->
+                            @{ Html.RenderAction("Partial_QuickView", "Home", new { model = listmodal });}
+                            <!-- / quick view modal -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+<!-- / Products section -->
+<!-- banner section -->
+<section id="aa-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-banner-area">
+                        <a href="#"><img src="~/Content/client/img/banner/1170x170.png" width="1170" height="170" alt="fashion banner img" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- popular section -->
+<section id="aa-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-product-area">
+                        <div class="aa-product-inner">
+                            <!-- start prduct navigation -->
+                            <ul class="nav nav-tabs aa-products-tab">
+                                <li class="active"><a href="#discount" data-toggle="tab">Đang giảm</a></li>
+                                <li><a href="#bestseller" data-toggle="tab">Top mua</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- Start new product category -->
+                                <div class="tab-pane fade in active" id="discount">
+                                    <ul class="aa-product-catg">
+                                        @for (int i = 0; i < listdiscount.Count(); i++)
+                                        {
+                                            var link = "/" + listdiscount[i].MetaTitle + "-" + listdiscount[i].ID;
+                                            <!-- start single product item -->
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="@link"><img src="~/Data/ImgProduct/@listdiscount[i].Image" alt="polo shirt img" height="300"></a>
+                                                    @if (listdiscount[i].Quantity > 0)
+                                                    {
+                                                        <a class="aa-add-card-btn" href="/them-vao-gio-@listdiscount[i].ID"><span class="fa fa-shopping-cart"></span>Thêm vào giỏ</a>
+                                                    }
+                                                    <figcaption>
+                                                        @if (listdiscount[i].Name.Count() >= 40)
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listdiscount[i].Name.ToString().Substring(0, 40) ...</a></h4>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listdiscount[i].Name.ToString()</a></h4>
+                                                        }
+                                                        @if (listdiscount[i].ProductStatus > 0)
+                                                        {
+                                                            <span class="aa-product-price">@listdiscount[i].PromotionPrice VNĐ</span><span class="aa-product-price"><del>@listdiscount[i].Price VNĐ</del></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price">@listdiscount[i].Price VNĐ</span>
+                                                        }
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="/them-vao-yeu-thich-@listdiscount[i].ID" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#@listdiscount[i].ID"><span class="fa fa-search"></span></a>
+                                                </div>
+                                                <!-- product badge -->
+                                                @if (listview[i].Quantity <= 0)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">HẾT</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">-@listdiscount[i].ProductStatus %</span>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                    <a class="aa-browse-btn" href="/san-pham-dang-giam-gia">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                                </div>
+                                <!-- / new product category -->
+                                <!-- start favor product category -->
+                                <div class="tab-pane fade" id="bestseller">
+                                    <ul class="aa-product-catg">
+                                        @for (int i = 0; i < listseller.Count(); i++)
+                                        {
+                                            var link = "/" + listseller[i].MetaTitle + "-" + listseller[i].ID;
+                                            <!-- start single product item -->
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="@link"><img src="~/Data/ImgProduct/@listseller[i].Image" alt="polo shirt img" height="300"></a>
+                                                    @if (listseller[i].Quantity > 0)
+                                                    {
+                                                        <a class="aa-add-card-btn" href="/them-vao-gio-@listseller[i].ID"><span class="fa fa-shopping-cart"></span>Thêm vào giỏ</a>
+                                                    }
+                                                    <figcaption>
+                                                        @if (listseller[i].Name.Count() >= 40)
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listseller[i].Name.ToString().Substring(0, 40) ...</a></h4>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h4 class="aa-product-title"><a href="@link">@listseller[i].Name.ToString()</a></h4>
+                                                        }
+                                                        @if (listseller[i].ProductStatus > 0)
+                                                        {
+                                                            <span class="aa-product-price">@listseller[i].PromotionPrice VNĐ</span><span class="aa-product-price"><del>@listseller[i].Price VNĐ</del></span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price">@listseller[i].Price VNĐ</span>
+                                                        }
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="/them-vao-yeu-thich-@listseller[i].ID" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#@listseller[i].ID"><span class="fa fa-search"></span></a>
+                                                </div>
+                                                <!-- product badge -->
+                                                @if (listview[i].Quantity <= 0)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">HẾT</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#"><span class="glyphicon glyphicon-usd" style="font-size:24px"></span></span>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                    <a class="aa-browse-btn" href="/san-pham-ban-chay">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
+                                </div>
+                                <!-- / favor product category -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / popular section -->
+<!-- Support section -->
+<section id="aa-support">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-support-area">
+                    <!-- single support -->
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="aa-support-single">
+                            <span class="fa fa-truck"></span>
+                            <h4>MIỄN PHÍ GIAO HÀNG</h4>
+                            <P>Chưa bao giờ khiến khách hàng mong chờ</P>
+                        </div>
+                    </div>
+                    <!-- single support -->
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="aa-support-single">
+                            <span class="fa fa-clock-o"></span>
+                            <h4>Hoàn tiền trong 2 ngày</h4>
+                            <P>Đem đến sự hài lòng tuyệt đối</P>
+                        </div>
+                    </div>
+                    <!-- single support -->
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="aa-support-single">
+                            <span class="fa fa-phone"></span>
+                            <h4>Hỗ trợ 24/7</h4>
+                            <P>Phục vụ khách hàng hết mình</P>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Support section -->
+<!-- Testimonial -->
+@{ Html.RenderAction("Partial_Testimonial", "Home");}
+<!-- / Testimonial -->

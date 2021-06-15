@@ -1,0 +1,94 @@
+﻿@model List<Model.EF.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" height="300" width="1920" alt="fashion img" />
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Ưa thích</h2>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li class="active">Ưa thích</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- Cart view section -->
+<section id="cart-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cart-view-area">
+                    <div class="cart-view-table aa-wishlist-table">
+                        <form action="">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Sách</th>
+                                            <th>Giá</th>
+                                            <th>Trạng thái</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Count > 0)
+                                        {
+                                            for (int i = 0; i < Model.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td><a class="remove" href="/Wish/DeleteItem/@Model[i].ID"><fa class="fa fa-close"></fa></a></td>
+                                                    <td><a href="/ProductClient/Detail/@Model[i].ID"><img src="~/Data/ImgProduct/@Model[i].Image" alt="img"></a></td>
+                                                    <td><a class="aa-cart-title" href="/ProductClient/Detail/@Model[i].ID">@Model[i].Name</a></td>
+                                                    @if (Model[i].ProductStatus > 0)
+                                                    {
+                                                        <td><del>@Model[i].Price</del>|@Model[i].PromotionPrice</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Model[i].Price</td>
+                                                    }
+                                                    @if (Model[i].Status == true)
+                                                    {
+                                                        if (Model[i].Quantity > 0)
+                                                        {
+                                                            <td>Còn hàng</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>Hết hàng</td>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Hàng không còn tồn tại</td>
+                                                    }
+                                                    <td><a href="/Cart/AddItem/@Model[i].ID" class="aa-add-to-cart-btn">Add To Cart</a></td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <h3 class="text-center">Không có sản phẩm ưa thích</h3>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Cart view section -->

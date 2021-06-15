@@ -1,0 +1,105 @@
+﻿@model List<Model.EF.Product>
+@{
+    var listcate = (List<Model.EF.ProductCategory>)ViewBag.Cate;
+}
+@for (int i = 0; i < Model.Count; i++)
+{
+    var link = "/" + Model[i].MetaTitle + "-" + Model[i].ID;
+    <div class="modal fade" id="@Model[i].ID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="row">
+                        <!-- Modal view slider -->
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="aa-product-view-slider">
+                                <div class="simpleLens-gallery-container" id="demo-1">
+                                    <div class="simpleLens-container">
+                                        <div class="simpleLens-big-image-container">
+                                            <a class="simpleLens-lens-image" data-lens-image="~/Data/ImgProduct/@Model[i].Image">
+                                                <img src="~/Data/ImgProduct/@Model[i].Image" class="simpleLens-big-image">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal view content -->
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="aa-product-view-content">
+                                <h3>@Model[i].Name</h3>
+                                <div class="aa-price-block">
+                                    Giá :
+                                    @if (Model[i].ProductStatus > 0)
+                                    {
+                                        <span class="aa-product-price">@Model[i].PromotionPrice VNĐ|</span><span class="aa-product-price"><del>@Model[i].Price VNĐ</del></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="aa-product-price">@Model[i].Price VNĐ</span>
+                                    }
+                                    @if (Model[i].Quantity > 0)
+                                    {
+                                        <p class="aa-product-avilability">Tình trạng: <span>Còn hàng</span></p>
+                                    }
+                                    else
+                                    {
+                                        <p class="aa-product-avilability">Tình trạng: <span>Hết hàng</span></p>
+                                    }
+                                </div>
+                                <form action="/Cart/AddItem">
+                                    <div class="aa-prod-quantity">
+                                        Số lượng :
+                                        <select name="quantity" id="quantity">
+                                            @if (Model[i].Quantity > 6)
+                                            {
+                                                <option value="1" selected>1</option>
+                                                for (int j = 2; j <= 6; j++)
+                                                {
+                                                    <option value="@j">@j</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (Model[i].Quantity > 0)
+                                                {
+                                                    for (int j = 1; j <= Model[i].Quantity; j++)
+                                                    {
+                                                        <option value="@j">@j</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option value="0">0</option>
+                                                }
+                                            }
+                                        </select>
+                                        <p class="aa-prod-category">
+                                            Thể loại:
+                                            @foreach (var item in listcate)
+                                            {
+                                                if (item.ID == Model[i].CategoryID)
+                                                {
+                                                    <a href="/san-pham-theo-the-loai-@Model[i].CategoryID">@item.Name</a>
+                                                }
+                                            }
+                                        </p>
+                                        <input hidden value="@Model[i].ID" name="id" />
+                                    </div>
+                                    <div class="aa-prod-view-bottom">
+                                        @if (Model[i].Quantity > 0)
+                                        {
+                                            <input type="submit" class="aa-add-to-cart-btn" value="Thêm vào giỏ" />
+                                        }
+                                        <a href="@link" class="aa-add-to-cart-btn">View Details</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+}

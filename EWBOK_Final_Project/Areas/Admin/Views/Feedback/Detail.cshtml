@@ -1,0 +1,79 @@
+﻿@model Model.EF.Feedback
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+        Information Feedback
+    </h1>
+</div>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.CreateDate) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreateDate)
+                </dd>
+            </div>
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Name) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Phone) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+            </div>
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Email) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Address) :</h3>
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <dt>
+                    <h3>@Html.DisplayNameFor(model => model.Content) :</h3>
+                </dt>
+
+                <dd>
+                    <textarea class="form-control" readonly>@Model.Content</textarea>
+                </dd>
+            </div>
+        </div>
+    </dl>
+</div>
+

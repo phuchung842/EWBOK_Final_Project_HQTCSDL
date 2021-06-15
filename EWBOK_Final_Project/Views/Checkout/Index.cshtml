@@ -1,0 +1,159 @@
+﻿@model List<EWBOK_Final_Project.Models.CartItem>
+@using EWBOK_Final_Project.Common;
+@using Model.EF;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal? subtotal = 0;
+    decimal? trans = 10000;
+}
+
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" width="1920" height="300" alt="fashion img" />
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Thanh toán</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Trang chủ</a></li>
+                    <li class="active">Checkout</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- Cart view section -->
+<section id="checkout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="checkout-area">
+                    @if (Model.Count > 0)
+                    {
+                        <form action="/Checkout/Payment" method="post">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="checkout-left">
+                                        <div class="panel-group" id="accordion">
+                                            <!-- Shipping Address -->
+                                            <div class="panel panel-default aa-checkout-billaddress">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                                            Shippping Address
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse in">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    <input value="@(((User)Session[Constants.USER_INFO]).Name)" readonly name="orderer" type="text" placeholder="Người đặt*">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    <input name="receiver" type="text" placeholder="Người nhận" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    <input name="email" type="email" placeholder="Email*" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    <input name="phone" type="tel" placeholder="Số điện thoại*" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    <textarea required name="address" cols="8" rows="3" placeholder="Địa chỉ giao*"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="checkout-right">
+                                        <h4>Chi tiết đặt hàng</h4>
+                                        <div class="aa-order-summary-area">
+                                            <table class="table table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sách</th>
+                                                        <th>Tổng</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < Model.Count; i++)
+                                                    {
+                                                        <tr>
+                                                            <td>@Model[i].Product.Name<strong> x  @Model[i].Quantity</strong></td>
+                                                            @if (Model[i].Product.ProductStatus > 0)
+                                                            {
+                                                                decimal? total = Model[i].Product.PromotionPrice * Model[i].Quantity;
+                                                                subtotal = subtotal + total;
+                                                                <td>@total VNĐ</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                decimal? total = Model[i].Product.Price * Model[i].Quantity;
+                                                                subtotal = subtotal + total;
+                                                                <td>@total VNĐ</td>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Tổng</th>
+                                                        <td>@subtotal VNĐ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Vận chuyển</th>
+                                                        <td>@trans</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Tổng chi</th>
+                                                        <td>@(subtotal + trans)</td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <h4>Phức thức thanh toán</h4>
+                                        <div class="aa-payment-method">
+                                            <label for="cashdelivery"><input type="radio" id="cashdelivery" name="optionsRadios">Trả bằng tiền mặt</label>
+                                            <label for="paypal"><input type="radio" id="paypal" name="optionsRadios" checked>Paypal</label>
+                                            <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark">
+                                            <input type="submit" value="Đặt hàng" class="aa-browse-btn">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <h3>Chưa có sản phẩm trong giỏ hàng</h3>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- / Cart view section -->

@@ -1,0 +1,157 @@
+﻿@model Model.EF.User
+@using EWBOK_Final_Project.Areas.Admin.Model;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listpayment = (List<JoinOrder_OrderDetail>)ViewBag.ListPayment;
+    var listproduct = (List<Model.EF.Product>)ViewBag.ListProduct;
+}
+@section jsFooter{
+    <script src="~/Content/admin/datatables/datatables-demo.js"></script>
+    <script src="~/Content/admin/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/admin/datatables/dataTables.bootstrap4.min.js"></script>
+}
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" width="1920" height="300" />
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Thông tin</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Trang chủ</a></li>
+                    <li class="active">Thông tin người dùng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- product category -->
+<section id="aa-product-category">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3">
+                <div class="aa-product-catg-content">
+                    <div class="aa-product-catg-head">
+                    </div>
+                    <div class="aa-product-catg-body">
+                        <form class="aa-login-form" action="@Url.Action("Edit","User")">
+                            <label><strong>Ảnh</strong></label><br />
+                            <img class="rounded-circle" src="~/Data/ImgAdmin/@Model.ImagePath" height="150" width="150" style="border-radius:50%;" /><br />
+                            <label><strong>Username</strong></label>
+                            <input type="text" readonly value="@Model.UserName" />
+                            <label><strong>Họ tên</strong></label>
+                            <input type="text" readonly value="@Model.Name" />
+                            <label><strong>Email</strong></label>
+                            <input type="text" readonly value="@Model.Email" />
+                            <label><strong>Điện thoại</strong></label>
+                            <input type="text" readonly value="@Model.Phone" />
+                            <button type="submit" class="aa-browse-btn">Chỉnh sửa</button>
+                        </form>
+                        <!-- quick view modal -->
+                        <!-- / quick view modal -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-md-pull-9">
+                <aside class="aa-sidebar">
+                    <!-- single sidebar -->
+                    <!-- single sidebar -->
+                    <!-- single sidebar -->
+                    <br />
+                    <br />
+                    <br />
+                    <!-- single sidebar -->
+                    <div class="aa-sidebar-widget">
+                        <h3>Chọn màu trang web</h3>
+                        <div class="aa-color-tag">
+                            <a class="aa-color-green" href="/User/ChangeColorWebsite?color=green"></a>
+                            <a class="aa-color-yellow" href="/User/ChangeColorWebsite?color=yellow"></a>
+                            <a class="aa-color-red" href="/User/ChangeColorWebsite?color=red"></a>
+                            <a class="aa-color-purple" href="/User/ChangeColorWebsite?color=purple"></a>
+                            <a class="aa-color-blue" href="/User/ChangeColorWebsite?color=blue"></a>
+                            <a class="aa-color-orange" href="/User/ChangeColorWebsite?color=orange"></a>
+                            <a class="aa-color-gray" href="/User/ChangeColorWebsite?color=gray"></a>
+                            <a class="aa-color-black" href="/User/ChangeColorWebsite?color=black"></a>
+                            <a class="aa-color-bridge" href="/User/ChangeColorWebsite?color=bridge"></a>
+                            <a class="aa-color-darkred" href="/User/ChangeColorWebsite?color=darkred"></a>
+                            <a class="aa-color-liteblue" href="/User/ChangeColorWebsite?color=liteblue"></a>
+                            <a class="aa-color-orchid" href="/User/ChangeColorWebsite?color=orchid"></a>
+                        </div>
+                    </div>
+                    <!-- single sidebar -->
+                    <div class="aa-sidebar-widget">
+                        <a href="/RentRegistration/Index"><h3>Đăng ký</h3></a>
+                        <a href="/Rent/Index"><h3>Đang mượn</h3></a>
+                    </div>
+                        <!-- single sidebar -->
+                </aside>
+            </div>
+            
+            <div class="col-lg-12 col-md-12 col-sm-12 col-md-push-0">
+                <label><h3><strong>Danh mục đã thanh toán</strong></h3></label>
+                @if (listpayment.Count > 0)
+                {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <td><strong>Tên sách</strong></td>
+                                <td><strong>Ngày mua</strong></td>
+                                <td><strong>Giá mua</strong></td>
+                                <td><strong>Giá đã giảm</strong></td>
+                                <td><strong>Số lượng</strong></td>
+                                <td><strong>Người nhận</strong></td>
+                                <td><strong>SĐT nhận</strong></td>
+                                <td><strong>Địa chỉ nhận</strong></td>
+                                <td><strong>Email nhận</strong></td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Tên sách</strong></td>
+                                <td><strong>Ngày mua</strong></td>
+                                <td><strong>Giá mua</strong></td>
+                                <td><strong>Giá đã giảm</strong></td>
+                                <td><strong>Số lượng</strong></td>
+                                <td><strong>Người nhận</strong></td>
+                                <td><strong>SĐT nhận</strong></td>
+                                <td><strong>Địa chỉ nhận</strong></td>
+                                <td><strong>Email nhận</strong></td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @for (int i = 0; i < listpayment.Count; i++)
+                            {
+                                <tr>
+                                    @for (int j = 0; j < listproduct.Count; j++)
+                                    {
+                                        if (listproduct[j].ID == listpayment[i].OrderDetail.ProductID)
+                                        {
+                                            <td>@listproduct[i].Name</td>
+                                        }
+                                    }
+                                    <td>@listpayment[i].Order.CreateDate</td>
+                                    <td>@listpayment[i].OrderDetail.Price</td>
+                                    <td>@listpayment[i].OrderDetail.PromotionPrice</td>
+                                    <td>@listpayment[i].OrderDetail.Quantity</td>
+                                    <td>@listpayment[i].Order.ShipName</td>
+                                    <td>@listpayment[i].Order.ShipMobile</td>
+                                    <td>@listpayment[i].Order.ShipAddress</td>
+                                    <td>@listpayment[i].Order.ShipEmail</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                }
+                else
+                {
+                    <h5 style="text-align:center;">Chưa thanh toán lần nào</h5>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / product category -->

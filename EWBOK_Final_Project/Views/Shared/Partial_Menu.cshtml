@@ -1,0 +1,76 @@
+﻿@using Model.EF;
+@{
+    var listallcate = (List<ProductCategory>)ViewBag.Category;
+    var listallaut = (List<Author>)ViewBag.Author;
+
+    var listtake10cate = listallcate.Take(10).ToList();
+    var listtakeafter10cate = listallcate.Skip(10).Take(listallcate.Count - 10).ToList();
+    var listtake10aut = listallaut.Take(10).ToList();
+    var listtakeafter10aut = listallaut.Skip(10).Take(listallaut.Count - 10).ToList();
+}
+<section id="menu">
+    <div class="container">
+        <div class="menu-area">
+            <!-- Navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <!-- Left nav -->
+                    <ul class="nav navbar-nav">
+                        <li><a href="/Home">Home</a></li>
+                        <li>
+                            <a href="#">Thể loại <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @for (int i = 0; i < listtake10cate.Count; i++)
+                                {
+                                    <li><a href="/san-pham-theo-the-loai-@listtake10cate[i].ID">@listtake10cate[i].Name</a></li>
+                                }
+                                @if (listallcate.Count > 10)
+                                {
+                                    <li>
+                                        <a href="#">All...<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            @for (int i = 0; i < listtakeafter10cate.Count; i++)
+                                            {
+                                                <li><a href="/san-pham-theo-the-loai-@listtakeafter10cate[i].ID">@listtakeafter10cate[i].Name</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Tác giả<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @for (int i = 0; i < listtake10aut.Count; i++)
+                                {
+                                    <li><a href="/san-pham-theo-tac-gia-@listtake10aut[i].ID">@listtake10aut[i].Name</a></li>
+                                }
+                                @if (listallaut.Count > 10)
+                                {
+                                    <li>
+                                        <a href="#">All.. <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            @for (int i = 0; i < listtakeafter10aut.Count; i++)
+                                            {
+                                                <li><a href="/san-pham-theo-tac-gia-@listtakeafter10aut[i].ID">@listtakeafter10aut[i].Name</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                        <li><a href="/Contact">Liên hệ</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+</section>

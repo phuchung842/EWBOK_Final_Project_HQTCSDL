@@ -1,0 +1,115 @@
+﻿@using EWBOK_Final_Project.Models;
+@model List<CartItem>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal? total = 0;
+}
+@section jsFooter{
+    <script src="~/Content/client/js/controller/cartController.js"></script>
+}
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img src="~/Content/client/img/slide/book_heart_page_shadow_light_25736_1920x1080.jpg" height="300" width="1920" alt="fashion img">
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Giỏ hàng</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/Home">Home</a></li>
+                    <li class="active">Cart</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / catg header banner section -->
+<!-- Cart view section -->
+<section id="cart-view">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="cart-view-area">
+                    @if (Model.Count > 0)
+                    {
+                        <div class="cart-view-table">
+                            <form action="/Cart/Update">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Sách</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 0; i < Model.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td><a class="remove" href="/Cart/Delete/@Model[i].Product.ID"><fa class="fa fa-close"></fa></a></td>
+                                                    <td><a href="#"><img src="~/Data/ImgProduct/@Model[i].Product.Image" height="300" alt="img"></a></td>
+                                                    <td><a class="aa-cart-title" href="/ProductClient/Detail/@Model[i].Product.ID">@Model[i].Product.Name</a></td>
+                                                    @if (Model[i].Product.ProductStatus > 0)
+                                                    {
+                                                        <td><del>@Model[i].Product.Price VNĐ</del>|@Model[i].Product.PromotionPrice VNĐ</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Model[i].Product.Price</td>
+                                                    }
+                                                    <td><input class="aa-cart-quantity txtQuantity" data-id="@Model[i].Product.ID" type="number" value="@Model[i].Quantity"></td>
+                                                    @if (Model[i].Product.ProductStatus > 0)
+                                                    {
+                                                        var totalamount = Model[i].Product.PromotionPrice * Model[i].Quantity;
+                                                        <td>@totalamount</td>
+                                                        total = total + totalamount;
+                                                    }
+                                                    else
+                                                    {
+                                                        var totalamount = Model[i].Product.Price * Model[i].Quantity;
+                                                        <td>@totalamount</td>
+                                                        total = total + totalamount;
+                                                    }
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td colspan="6" class="aa-cart-view-bottom">
+                                                    <div class="aa-cart-coupon">
+                                                        <a class="aa-cart-view-btn" href="/Cart/DeleteAll">Xoá tất cả</a>
+                                                    </div>
+                                                    <input id="btnUpdate" class="aa-cart-view-btn" type="submit" value="Cập nhật">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
+                            <!-- Cart Total view -->
+                            <div class="cart-view-total">
+                                <h4>Tổng cộng</h4>
+                                <table class="aa-totals-table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>@total VNĐ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <a href="/Checkout" class="aa-cart-view-btn">Thanh toán</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <h3>Không có sản phẩm trong giỏ hàng</h3>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Cart view section -->
